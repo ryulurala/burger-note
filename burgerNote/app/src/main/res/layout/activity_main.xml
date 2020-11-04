@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/host"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tab_content1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="텍스트 메모"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tab_content2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="그림 메모"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tab_content3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="음성 메모"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tab_content4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="일정"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tab_content5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="설정"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+        </FrameLayout>
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
+
+</TabHost>
