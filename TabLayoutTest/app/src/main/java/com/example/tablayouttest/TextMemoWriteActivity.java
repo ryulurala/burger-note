@@ -38,7 +38,7 @@ public class TextMemoWriteActivity extends AppCompatActivity implements View.OnC
         db.execSQL("insert into tb_text_memo (title, content) values (?, ?)", new String[]{title, content});
         db.close();
 
-        Intent intent = new Intent(this, ReadDBActivity.class);
-        startActivity(intent);
+        // Intent intent = new Intent(this, ReadDBActivity.class);
+        // startActivity(intent);
     }
 }
