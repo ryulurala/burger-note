@@ -13,20 +13,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="12dp"
             android:paddingHorizontal="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:text="텍스트 메모"
-                android:textSize="32dp"
+                android:text="그림 메모"
+                android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="@color/gray9" />
 
             <Button
-                android:id="@+id/tab2_btn_add"
+                android:id="@+id/tab1_btn_add"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -35,7 +35,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tab2_rv"
+            android:id="@+id/tab1_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -47,6 +47,8 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

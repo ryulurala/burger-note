@@ -23,7 +23,7 @@ public class TextMemoAdapter extends RecyclerView.Adapter<TextMemoAdapter.Custom
     @Override
     public TextMemoAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text_memo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_memo_item, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
 
         return holder;

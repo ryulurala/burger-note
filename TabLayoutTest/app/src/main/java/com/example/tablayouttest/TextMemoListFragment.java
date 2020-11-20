@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class TabFragment2 extends Fragment {
+public class TextMemoListFragment extends Fragment {
 
     private ArrayList<TextMemoData> arrayList;
     private TextMemoAdapter textMemoAdapter;
@@ -25,7 +25,7 @@ public class TabFragment2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.tab2_fragment, container, false);
+        View view = inflater.inflate(R.layout.text_memo_list_fragment, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.tab2_rv);
         linearLayoutManager = new LinearLayoutManager(getActivity());

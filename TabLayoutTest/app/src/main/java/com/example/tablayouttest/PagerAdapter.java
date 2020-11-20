@@ -20,11 +20,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch(position) {
             case 0:
-                TabFragment1 tab1 = new TabFragment1();
+                DrawingMemoListFragment tab1 = new DrawingMemoListFragment();
                 return tab1;
 
             case 1:
-                TabFragment2 tab2 = new TabFragment2();
+                TextMemoListFragment tab2 = new TextMemoListFragment();
                 return tab2;
 
             case 2:
