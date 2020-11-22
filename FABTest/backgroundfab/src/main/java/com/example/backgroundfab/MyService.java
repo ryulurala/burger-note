@@ -16,12 +16,10 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class MyService extends Service {
 
-    WindowManager wm;           // 윈도우 매니저(가장 바깥 쪽 View?)
+    WindowManager wm;           // 윈도우 매니저(화면을 구성하는 최대 단위)
     View fstView;             // 오버레이할 View
     View scdView;
     Animation anim;
@@ -54,14 +52,13 @@ public class MyService extends Service {
         scdView = layoutInflater.inflate(R.layout.second, null);     // 나중에는 두 번째 파라미터로 view group 에 붙이기
 
         // 애니메이션 불가 - 시스템 권한때문에, windowManager 를 move 하는 것처럼 update 시켜줘야 함.(timeout, tick)
-//        anim = AnimationUtils.loadAnimation(this, R.anim.scale_up);
-//        anim.setFillAfter(true);
+        anim = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+        anim.setFillAfter(true);
 
-        final ImageButton bt = (ImageButton) fstView.findViewById(R.id.fstbt);
+        ImageButton bt = fstView.findViewById(R.id.fstbt);
         bt.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
                 switch(motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:                // 사용자 터치 다운이면(0)
                         initTime = System.currentTimeMillis();          // 처음 터치 시간
@@ -90,8 +87,9 @@ public class MyService extends Service {
                             // onClick
                             initDialogParams();          // layoutParams 속성 바꾸기(gravity 중점적으로)
                             wm.addView(scdView, mParams);
+                            View bt2 = scdView.findViewById(R.id.scdbt);            // 자식 뷰 애니메이션
 
-//                       scdView.startAnimation(anim);        // 시스템 권한은 애니메이션 불가
+                            bt2.startAnimation(anim);        // 시스템 권한은 애니메이션 불가
 
                             wm.removeView(fstView);
                             fstView = null;
@@ -107,24 +105,26 @@ public class MyService extends Service {
     private void initWindowParams() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             mParams = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,        // 변경해야함 - 부모의 가중치로 크기를 지정
                     WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
-                    PixelFormat.TRANSLUCENT);
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,   // 경고 창 같이 항상 다른 프로그램 위에 존재하도록
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE   // 콘텐츠에 대한 전체 화면 사용 가능, 윈도우가 포커스 X
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, // 창을 화면 밖으로 확장 가능
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN    // 상태바 영역도 윈도우에 포함
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR, // LAYOUT_IN_SCREEN 과 같이 쓰임, 다른 윈도우의 네비바와 상태바가 겹치지 않게 함
+                    PixelFormat.TRANSLUCENT // 배경을 투명하게
+            );
         } else {
             mParams = new WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,    // 모든 활동 창 위에 표시, permission.system_alert_window 필요
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
-                    PixelFormat.TRANSLUCENT);
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
+                    PixelFormat.TRANSLUCENT
+            );
         }
         mParams.width = buttonScale * (int)getResources().getDisplayMetrics().density;       // 80dp(나중에 수정 가능하도록, static??)
         mParams.height = buttonScale * (int)getResources().getDisplayMetrics().density;      // 80dp
@@ -138,20 +138,22 @@ public class MyService extends Service {
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
-                    PixelFormat.TRANSLUCENT);
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
+                    PixelFormat.TRANSLUCENT
+            );
         } else {
             mParams = new WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
-                    PixelFormat.TRANSLUCENT);
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+//                            | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR,
+                    PixelFormat.TRANSLUCENT
+            );
         }
         mParams.width = dialogScale * (int)getResources().getDisplayMetrics().density;       // 80dp(나중에 수정 가능하도록, static??)
         mParams.height = dialogScale * (int)getResources().getDisplayMetrics().density;      // 80dp

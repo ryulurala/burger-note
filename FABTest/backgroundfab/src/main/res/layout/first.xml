@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:scaleType="fitXY"
-        android:id="@+id/fstbt"
-        android:src="@drawable/korea">
+        android:src="@drawable/korea"
+        android:id="@+id/fstbt">
     </ImageButton>
 </LinearLayout>
