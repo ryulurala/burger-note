@@ -4,21 +4,5 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text= "title"
-        android:textColor="@android:color/white"
-        android:textSize="20dp"
-        android:gravity="center_vertical" />
-    <Button
-        android:id="@+id/bt_start"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="btn_start" />
-    <Button
-        android:id="@+id/bt_stop"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="btn_end" />
+
 </LinearLayout>
