@@ -1,4 +1,4 @@
-package com.example.backgroundfab;
+package com.example.burgernote;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 public class FloatingView extends LinearLayout implements View.OnTouchListener {
 
     private GestureDetector mGestureDetector;
-    private Callbacks mCallbacks;       // = FloatingViewManager
+    private Callbacks mCallbacks;
 
     // layoutParams 에 접근하므로 int 형
-    private int downRawX, downRawY;					// 움직이기 위해 터치한 시작 점
-    private int lastX, lastY;       // 움직이기 이전에 뷰가 마지막으로 위치한 점
-    private boolean oneTime = false;        // for. setMaxPosition()
+    private int mDownRawX, mDownRawY;					// 움직이기 위해 터치한 시작 점
+    private int mLastX, mLastY;       // 움직이기 이전에 뷰가 마지막으로 위치한 점
+    private boolean mOneTime;        // for. setMaxPosition()
 
     public FloatingView(Context context) {
         this(context, null);
@@ -35,6 +35,7 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
     void init(Context context){
         setOnTouchListener(this);
         mGestureDetector = new GestureDetector(context, new GestureListener());     // for. onclick()
+        mOneTime = false;
     }
 
     void setCallbacks(Callbacks callbacks){
@@ -46,31 +47,39 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
         int rowX = (int) motionEvent.getRawX();                    //터치 시작 점
         int rowY = (int) motionEvent.getRawY();                    //터치 시작 점
 
-        mGestureDetector.onTouchEvent(motionEvent);
+        mGestureDetector.onTouchEvent(motionEvent);     // for. onClick()
 
         switch(motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:                // 사용자 터치 다운이면(0)
-                if(!oneTime) {mCallbacks.setMaxPosition(); oneTime=true;}    // limit move View position
+                if(!mOneTime) {mCallbacks.setMaxPosition(); mOneTime=true;}    // 스크린 밖 이동 제한
 
-                downRawX = rowX;                           //뷰의 시작 점
-                downRawY = rowY;                            //뷰의 시작 점
+                mDownRawX = rowX;                           //뷰의 시작 점
+                mDownRawY = rowY;                            //뷰의 시작 점
 
-                lastX = mCallbacks.getParamsX();           // View 가 있던 이전의 마지막 X
-                lastY = mCallbacks.getParamsY();           // View 가 있던 이전의 마지막 Y
+                mLastX = mCallbacks.getParamsX();           // View 가 있던 이전의 마지막 X
+                mLastY = mCallbacks.getParamsY();           // View 가 있던 이전의 마지막 Y
 
-                return true;
+                return true;        // Motion 이벤트 소모, 다른 터치 이벤트 소모 X (focus)
             case MotionEvent.ACTION_MOVE:                // 사용자 터치 무브면(2)
-                int distX = rowX - downRawX;    //이동한 거리
-                int distY = rowY - downRawY;    //이동한 거리
+                int distX = rowX - mDownRawX;    //이동한 거리
+                int distY = rowY - mDownRawY;    //이동한 거리
 
-                int destX = lastX + distX;
-                int destY = lastY + distY;
+                int destX = mLastX + distX;     // 목적지
+                int destY = mLastY + distY;     // 목적지
 
                 mCallbacks.onDrag(destX, destY);
 
-                return true;
+                return true;        // Motion 이벤트 소모, 다른 터치 이벤트 소모 X (focus)
         }
         return super.onTouchEvent(motionEvent);
+    }
+
+    interface Callbacks{
+        int getParamsX();
+        int getParamsY();
+        void onDrag(int dx, int dy);        // ACTION_MOVE
+        void onClick();     // click
+        void setMaxPosition();      // limit Position
     }
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -81,11 +90,4 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
         }
     }
 
-    interface Callbacks{
-        int getParamsX();
-        int getParamsY();
-        void onDrag(int dx, int dy);        // ACTION_MOVE
-        void onClick();     // click
-        void setMaxPosition();      // limit Position
-    }
 }

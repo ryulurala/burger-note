@@ -101,7 +101,7 @@ public class MyService extends Service {
                     }
                     break;
             }
-            return true;            // Motion 이벤트 소모, 다른 터치 이벤트 소모 X (focus)
+            return true;
         }
     };
 
@@ -115,14 +115,14 @@ public class MyService extends Service {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         wm = (WindowManager) getSystemService(WINDOW_SERVICE);       // 윈도우 서비스의 Manager 가져옴
 
-        initWindowParams();     // 레이아웃 속성들 초기화
+        initWindowParams();
 
         // 레이아웃을 객체로 만듬(Inflate)
         fstView = layoutInflater.inflate(R.layout.first, null, false);
         ImageButton bt = fstView.findViewById(R.id.fstbt);
 
         bt.setOnTouchListener(new mTouchListener());
-//        wm.addView(fstView, mParams);       // window 에 view 추가, permission 필요
+//        wm.addView(fstView, mParams);
     }
 
     public void initWindowParams() {

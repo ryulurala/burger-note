@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     static final int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 33;    // for. 요청 받고 나온 값 검사
     FloatingService myService;        // 서비스랑 통신 가능함
-    boolean isService = false;  // Service 중인지 확인
+    boolean isService = false;      // Service 중인지 확인
 
     final ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("myLog", "Activity: onStart()");
         checkPermission();      // 권한 검사
         if(isService){
-//            myService.hideView();
+            myService.hideView();
         }
     }
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("myLog", "Activity: onStop()");
         // 홈 버튼 눌렀을 시 호출되는 메소드
         if(isService){
-//            myService.showView();
+            myService.showView();
         }
     }
 

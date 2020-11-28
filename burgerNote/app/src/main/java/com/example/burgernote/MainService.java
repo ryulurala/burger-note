@@ -1,4 +1,4 @@
-package com.example.backgroundfab;
+package com.example.burgernote;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,15 +8,15 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-public class FloatingService extends Service {
+public class MainService extends Service {
 
-    FloatingViewManager floatingViewManager;
+    FloatingViewManager mFloatingViewManager;
 
-    IBinder mBinder = new FloatingBinder();
+    IBinder mBinder = new myBinder();
 
-    public class FloatingBinder extends Binder {     // Binder 상속(Binder 는 IBinder interface 를 구현)
-        FloatingService getService(){
-            return FloatingService.this;      // 현재 Service 객체를 리턴
+    public class myBinder extends Binder {     // Binder 상속(Binder 는 IBinder interface 를 구현)
+        MainService getService(){
+            return MainService.this;      // 현재 Service 객체를 리턴
         }
     }
 
@@ -38,26 +38,26 @@ public class FloatingService extends Service {
     }
 
     void init(){
-        floatingViewManager = new FloatingViewManager(this);
-        floatingViewManager.create();
-        floatingViewManager.initLayoutParams();
+        mFloatingViewManager = new FloatingViewManager(this);
+        mFloatingViewManager.create();
+        mFloatingViewManager.initLayoutParams();
     }
 
     void showView(){
-        floatingViewManager.addView();
+        mFloatingViewManager.addView();
     }
 
     void hideView(){
-        floatingViewManager.removeView();
+        mFloatingViewManager.removeView();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if(floatingViewManager != null) {
-            floatingViewManager.removeView();
-            floatingViewManager = null;
+        if(mFloatingViewManager != null) {
+            mFloatingViewManager.removeView();
+            mFloatingViewManager = null;
             Log.d("myLog", "myService onDestroy()");
         }
     }
