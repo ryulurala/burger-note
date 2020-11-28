@@ -10,12 +10,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 public class FloatingViewManager implements FloatingView.Callbacks{
     private final Context mContext;
     private final WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
-    private View mView;
+
+    private FloatingView mFloatingView;         // 첫 번째 떠오를 View
     private boolean mViewAdded;
 
     private final int DISPLAY_WIDTH, DISPLAY_HEIGHT;
@@ -33,12 +36,12 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
     void addView(){
         // window 에 view 추가, permission 필요
-        mWindowManager.addView(mView, mLayoutParams);
+        mWindowManager.addView(mFloatingView, mLayoutParams);
         mViewAdded = true;
     }
 
     void removeView(){
-        mWindowManager.removeView(mView);
+        mWindowManager.removeView(mFloatingView);
         mViewAdded = false;
     }
 
@@ -48,8 +51,23 @@ public class FloatingViewManager implements FloatingView.Callbacks{
             LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             // 레이아웃을 객체로 만듬(Inflate)
-            mView = layoutInflater.inflate(R.layout.rootview, null);
-            ((FloatingView) mView).setCallbacks(this);
+            mFloatingView = (FloatingView) layoutInflater.inflate(R.layout.floating_view, null);
+            mFloatingView.setCallbacks(this);
+
+            // onClick() 연결
+            for(int i=1; i<mFloatingView.getChildCount(); i++){
+                View view = mFloatingView.getChildAt(i);
+                Log.d("myLog", "Child[" + i + "] = " + view);
+                view.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("myLog", "onClick() = " + v.getTag());
+                        // 각 tag 에 맞는 Dialog 띄워주기
+
+
+                    }
+                });
+            }
         }
     }
 
@@ -81,9 +99,9 @@ public class FloatingViewManager implements FloatingView.Callbacks{
         // dp
         mLayoutParams.gravity = Gravity.TOP | Gravity.START;        // 필수! 기준을 만듬 TOP | LEFT
 
-        // size 변경
-        mLayoutParams.width = 200;
-        mLayoutParams.height = 200;
+        // 크기 조절
+//        mLayoutParams.width = 200;
+//        mLayoutParams.height = 200;
     }
 
     void optimizePosition(){
@@ -97,8 +115,8 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
     @Override
     public void setMaxPosition(){
-        mMaxX = DISPLAY_WIDTH - mView.getWidth();
-        mMaxY = DISPLAY_HEIGHT - mView.getHeight();
+        mMaxX = DISPLAY_WIDTH - mFloatingView.getWidth();
+        mMaxY = DISPLAY_HEIGHT - mFloatingView.getHeight();
     }
 
     @Override
@@ -108,12 +126,13 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
         optimizePosition();         // View 가 화면 밖으로 넘어가면 최적화
 
-        mWindowManager.updateViewLayout(mView, mLayoutParams);
+        mWindowManager.updateViewLayout(mFloatingView, mLayoutParams);
     }
 
     @Override
     public void onClick() {
         // click 하면 일어날 일
+        // 자식 뷰(index > 0)들을 gond 상태에서 visible 상태로 변경
         Log.d("myLog", "onClick()");
     }
 
@@ -126,4 +145,5 @@ public class FloatingViewManager implements FloatingView.Callbacks{
     public int getParamsY(){
         return mLayoutParams.y;
     }
+
 }

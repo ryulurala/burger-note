@@ -2,9 +2,12 @@ package com.example.burgernote;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -43,15 +46,15 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        int rowX = (int) motionEvent.getRawX();                    //터치 시작 점
-        int rowY = (int) motionEvent.getRawY();                    //터치 시작 점
+    public boolean onTouch(View v, MotionEvent event) {
+        int rowX = (int) event.getRawX();                    //터치 시작 점
+        int rowY = (int) event.getRawY();                    //터치 시작 점
 
-        mGestureDetector.onTouchEvent(motionEvent);     // for. onClick()
+        mGestureDetector.onTouchEvent(event);     // for. onClick()
 
-        switch(motionEvent.getAction()) {
+        switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:                // 사용자 터치 다운이면(0)
-                if(!mOneTime) {mCallbacks.setMaxPosition(); mOneTime=true;}    // 스크린 밖 이동 제한
+                if(!mOneTime) {mCallbacks.setMaxPosition(); mOneTime=true; }    // 스크린 밖 이동 제한
 
                 mDownRawX = rowX;                           //뷰의 시작 점
                 mDownRawY = rowY;                            //뷰의 시작 점
@@ -71,7 +74,7 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
 
                 return true;        // Motion 이벤트 소모, 다른 터치 이벤트 소모 X (focus)
         }
-        return super.onTouchEvent(motionEvent);
+        return super.onTouchEvent(event);
     }
 
     interface Callbacks{
