@@ -16,8 +16,8 @@ public class TextMemoDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String text_memo_SQL = "create table tb_text_memo (" +
                 "_id integer primary key autoincrement, " +
-                "title, " +
-                "content)";
+                "content, " +
+                "date)";
 
         db.execSQL(text_memo_SQL);
     }

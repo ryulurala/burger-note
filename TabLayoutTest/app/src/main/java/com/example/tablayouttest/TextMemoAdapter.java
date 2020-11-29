@@ -32,7 +32,7 @@ public class TextMemoAdapter extends RecyclerView.Adapter<TextMemoAdapter.Custom
     @Override
     public void onBindViewHolder(@NonNull final TextMemoAdapter.CustomViewHolder holder, int position) {
 
-        holder.text_memo_context.setText(arrayList.get(position).getText_memo_context());
+        holder.text_memo_context.setText(arrayList.get(position).getText_memo_content());
         holder.text_memo_date.setText(arrayList.get(position).getText_memo_date());
 
         holder.itemView.setTag(position);

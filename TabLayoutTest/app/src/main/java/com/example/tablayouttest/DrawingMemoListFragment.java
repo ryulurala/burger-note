@@ -1,10 +1,11 @@
 package com.example.tablayouttest;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,9 @@ public class DrawingMemoListFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
+    SQLiteDatabase db;
+    DrawingMemoDBHelper helper;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -33,23 +37,23 @@ public class DrawingMemoListFragment extends Fragment {
 
         arrayList = new ArrayList<>();
 
+        // DB 가져오기 시작
+        helper = new DrawingMemoDBHelper(getActivity());
+        db = helper.getReadableDatabase();
+        db.beginTransaction();
+
+        Cursor cursor = db.rawQuery("select image, date from tb_drawing_memo order by _id desc", null);
+        while(cursor.moveToNext()) {
+            DrawingMemoData data = new DrawingMemoData(cursor.getString(0), cursor.getString(1));
+            arrayList.add(data);
+        }
+        db.close();
+        // DB 가져오기 끝
+
         drawingMemoAdapter = new DrawingMemoAdapter(arrayList);
         recyclerView.setAdapter(drawingMemoAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
-
-
-        // Button btn_add = (Button) btn_add.findViewById();
-        Button btn_add = (Button) view.findViewById(R.id.tab1_btn_add);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                DrawingMemoData mainData = new DrawingMemoData(R.drawable.test_image, "2020년 12월 31일");
-                arrayList.add(mainData);
-                drawingMemoAdapter.notifyDataSetChanged();
-            }
-        });
 
         return view;
     }

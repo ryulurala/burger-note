@@ -1,5 +1,8 @@
 package com.example.tablayouttest;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,10 @@ public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.
     @Override
     public void onBindViewHolder(@NonNull final DrawingMemoAdapter.CustomViewHolder holder, int position) {
 
-        holder.iv_thumbnail.setImageResource(arrayList.get(position).getDrawing_memo_thumbnail());
+        String imagePath = "/data/data/com.example.tablayouttest/files/" + arrayList.get(position).getDrawing_memo_image();
+        Bitmap bm = BitmapFactory.decodeFile(imagePath);
+
+        holder.iv_image.setImageBitmap(bm);
         holder.tv_date.setText(arrayList.get(position).getDrawing_memo_date());
 
         holder.itemView.setTag(position);
@@ -73,12 +79,12 @@ public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        protected ImageView iv_thumbnail;
+        protected ImageView iv_image;
         protected TextView tv_date;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.iv_thumbnail = (ImageView) itemView.findViewById(R.id.drawing_memo_thumbnail);
+            this.iv_image = (ImageView) itemView.findViewById(R.id.drawing_memo_image);
             this.tv_date = (TextView) itemView.findViewById(R.id.drawing_memo_date);
         }
 
