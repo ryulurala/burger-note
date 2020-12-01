@@ -32,7 +32,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return tab3;
 
             case 3:
-                TabFragment4 tab4 = new TabFragment4();
+                CalendarListFragment tab4 = new CalendarListFragment();
                 return tab4;
 
             case 4:

@@ -18,47 +18,48 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class DrawingMemoListFragment extends Fragment implements View.OnClickListener {
+public class CalendarListFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList<DrawingMemoData> arrayList;
-    private DrawingMemoAdapter drawingMemoAdapter;
+    private ArrayList<CalendarData> arrayList;
+    private CalendarAdapter calendarAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
     SQLiteDatabase db;
-    DrawingMemoDBHelper helper;
+    CalendarDBHelper helper;
 
     Button addBtn;
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.drawing_memo_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.calendar_list_fragment, container, false);
 
-        addBtn = view.findViewById(R.id.drawing_memo_list_add_btn);
+        addBtn = view.findViewById(R.id.calendar_list_add_btn);
         addBtn.setOnClickListener(this);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.tab1_rv);
+        recyclerView = (RecyclerView) view.findViewById(R.id.tab4_rv);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         arrayList = new ArrayList<>();
 
         // DB 가져오기 시작
-        helper = new DrawingMemoDBHelper(getActivity());
+        helper = new CalendarDBHelper(getActivity());
         db = helper.getReadableDatabase();
         db.beginTransaction();
 
-        Cursor cursor = db.rawQuery("select image, date from tb_drawing_memo order by _id desc", null);
+        Cursor cursor = db.rawQuery("select content, date, start_time, end_time from tb_calendar order by date, start_time, end_time", null);
         while(cursor.moveToNext()) {
-            DrawingMemoData data = new DrawingMemoData(cursor.getString(0), cursor.getString(1));
+            CalendarData data = new CalendarData(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
             arrayList.add(data);
         }
         db.close();
         // DB 가져오기 끝
 
-        drawingMemoAdapter = new DrawingMemoAdapter(arrayList);
-        recyclerView.setAdapter(drawingMemoAdapter);
+        calendarAdapter = new CalendarAdapter(arrayList);
+        recyclerView.setAdapter(calendarAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
@@ -67,7 +68,7 @@ public class DrawingMemoListFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), DrawingMemoWriteActivity.class);
+        Intent intent = new Intent(getActivity(), CalendarWriteActivity.class);
         startActivity(intent);
     }
 }

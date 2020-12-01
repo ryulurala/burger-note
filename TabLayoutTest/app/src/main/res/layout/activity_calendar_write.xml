@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp"
+    android:background="#ffffff">
+
+    <EditText
+        android:id="@+id/calendar_write_content_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="제목을 입력하세요." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/calendar_write_date_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="날짜를 입력하세요."
+            android:textSize="14dp"
+            android:textStyle="normal"
+            android:textColor="@color/gray6"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:id="@+id/calendar_write_date_button"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="입력"
+            android:textColor="@color/gray9"
+            android:onClick="showDatePickerDialog" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp" >
+
+        <TextView
+            android:id="@+id/calendar_write_start_time_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="시작하는 시간을 입력하세요."
+            android:textSize="14dp"
+            android:textStyle="normal"
+            android:textColor="@color/gray6"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:id="@+id/calendar_write_start_time_button"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="입력"
+            android:textColor="@color/gray9"
+            android:onClick="showStartTimePickerDialog" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/calendar_write_end_time_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="끝나는 시간을 입력하세요."
+            android:textSize="14dp"
+            android:textStyle="normal"
+            android:textColor="@color/gray6"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:id="@+id/calendar_write_end_time_button"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="입력"
+            android:textColor="@color/gray9"
+            android:onClick="showEndTimePickerDialog" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/calendar_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray0"
+        android:background="@drawable/filled_button"
+        android:layout_marginTop="16dp"
+        android:text="ADD" />
+
+</LinearLayout>
