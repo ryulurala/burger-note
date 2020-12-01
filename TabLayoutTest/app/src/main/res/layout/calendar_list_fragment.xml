@@ -20,15 +20,15 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="텍스트 메모"
+                android:text="일정"
                 android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="@color/gray9"
                 android:gravity="bottom"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"/>
 
             <Button
-                android:id="@+id/text_memo_list_add_btn"
+                android:id="@+id/calendar_list_add_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:minHeight="0dp"
@@ -40,7 +40,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tab2_rv"
+            android:id="@+id/tab4_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
