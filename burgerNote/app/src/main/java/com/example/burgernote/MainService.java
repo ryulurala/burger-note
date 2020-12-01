@@ -8,11 +8,14 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class MainService extends Service {
 
-    FloatingViewManager mFloatingViewManager;
+    private FloatingViewManager mFloatingViewManager;
+    private final IBinder BINDER = new myBinder();
 
-    IBinder mBinder = new myBinder();
+    ArrayList<Memo> mMemoList = new ArrayList<Memo>();
 
     public class myBinder extends Binder {     // Binder 상속(Binder 는 IBinder interface 를 구현)
         MainService getService(){
@@ -27,20 +30,34 @@ public class MainService extends Service {
         // Activity 에서 bindService()를 실행하면 호출됨.
         // data 를 전달할 필요 없으면 null 값 리턴.
         Log.d("myLog", "Service: onBind()");
-        return mBinder;     // 리턴할 mBinder 객체는 서비스와 클라이언트 사이의 인터페이스 정의
+        return BINDER;     // 리턴할 mBinder 객체는 서비스와 클라이언트 사이의 인터페이스 정의
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("myLog", "Service: onCreate()");
-        init();
+        initMemoViews();
+        initFloatingViewManager();
     }
 
-    void init(){
+    void initMemoViews(){
+        mMemoList.add(new DrawMemo(this));
+    }
+
+    void customizeMemos(boolean[] flags){
+        for(int i=0; i<mMemoList.size(); i++){
+            Memo memo = mMemoList.get(i);
+            if(flags[i]) memo.show();
+            else memo.hide();
+        }
+    }
+
+    void initFloatingViewManager(){
         mFloatingViewManager = new FloatingViewManager(this);
-        mFloatingViewManager.create();
-        mFloatingViewManager.initLayoutParams();
+
+        Memo[] memos = mMemoList.toArray(new Memo[0]);
+        mFloatingViewManager.setMemos(memos);
     }
 
     void showView(){

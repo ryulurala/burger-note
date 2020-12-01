@@ -9,66 +9,62 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+
 
 public class FloatingViewManager implements FloatingView.Callbacks{
-    private final Context mContext;
-    private final WindowManager mWindowManager;
+    private final Context SERVICE_CONTEXT;
+    private final WindowManager WINDOW_MANAGER;
     private WindowManager.LayoutParams mLayoutParams;
 
     private FloatingView mFloatingView;         // 첫 번째 떠오를 View
-    private boolean mViewAdded;
+    private ViewGroup mMemoGroup;
 
     private final int DISPLAY_WIDTH, DISPLAY_HEIGHT;
     private int mMaxX, mMaxY;
 
     FloatingViewManager(Context context){
         // constructor
-        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        mContext = context;     // FloatingService 의 context
+        WINDOW_MANAGER = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        SERVICE_CONTEXT = context;     // FloatingService 의 context
         DisplayMetrics matrix = new DisplayMetrics();
-        mWindowManager.getDefaultDisplay().getMetrics(matrix);
+        WINDOW_MANAGER.getDefaultDisplay().getMetrics(matrix);
         DISPLAY_WIDTH = matrix.widthPixels;
         DISPLAY_HEIGHT = matrix.heightPixels;
+
+        createLayout();
+        initLayoutParams();
     }
 
     void addView(){
         // window 에 view 추가, permission 필요
-        mWindowManager.addView(mFloatingView, mLayoutParams);
-        mViewAdded = true;
+        WINDOW_MANAGER.addView(mFloatingView, mLayoutParams);
     }
 
     void removeView(){
-        mWindowManager.removeView(mFloatingView);
-        mViewAdded = false;
+        WINDOW_MANAGER.removeView(mFloatingView);
+    }
+
+    void setMemos(Memo[] memos){
+        if(mMemoGroup.getChildCount() != 0){
+            mMemoGroup.removeAllViews();
+        }
+
+        for(int i=0; i<memos.length; i++){
+            mMemoGroup.addView(memos[i].mMemoButton);
+            Log.d("myLog", "Child[" + i + "] = " + memos[i].mMemoButton);
+        }
     }
 
     @SuppressLint("InflateParams")
-    void create(){
-        if(!mViewAdded){
-            LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private void createLayout(){
+        LayoutInflater layoutInflater = (LayoutInflater) SERVICE_CONTEXT.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            // 레이아웃을 객체로 만듬(Inflate)
-            mFloatingView = (FloatingView) layoutInflater.inflate(R.layout.floating_view, null);
-            mFloatingView.setCallbacks(this);
-
-            // onClick() 연결
-            for(int i=1; i<mFloatingView.getChildCount(); i++){
-                View view = mFloatingView.getChildAt(i);
-                Log.d("myLog", "Child[" + i + "] = " + view);
-                view.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("myLog", "onClick() = " + v.getTag());
-                        // 각 tag 에 맞는 Dialog 띄워주기
-
-
-                    }
-                });
-            }
-        }
+        // 레이아웃을 객체로 만듬(Inflate)
+        mFloatingView = (FloatingView) layoutInflater.inflate(R.layout.floating_view, null);
+        mFloatingView.setCallbacks(this);
+        mMemoGroup = (ViewGroup) mFloatingView.getChildAt(1);
     }
 
     void initLayoutParams() {
@@ -101,7 +97,7 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
         // 크기 조절
 //        mLayoutParams.width = 200;
-//        mLayoutParams.height = 200;
+//        mLayoutParams.height = 400;
     }
 
     void optimizePosition(){
@@ -126,14 +122,23 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
         optimizePosition();         // View 가 화면 밖으로 넘어가면 최적화
 
-        mWindowManager.updateViewLayout(mFloatingView, mLayoutParams);
+        WINDOW_MANAGER.updateViewLayout(mFloatingView, mLayoutParams);
     }
 
     @Override
     public void onClick() {
         // click 하면 일어날 일
-        // 자식 뷰(index > 0)들을 gond 상태에서 visible 상태로 변경
-        Log.d("myLog", "onClick()");
+        // 자식 뷰(index > 0)들을 gone 상태에서 visible 상태로 변경
+        Log.d("myLog", "rootView: onClick()");
+        showMemoList();
+        // onClick 이 일어날 때마다 MaxPosition 갱신해줘야 함.
+    }
+
+    private void showMemoList(){
+        if(mMemoGroup.getVisibility() == View.VISIBLE) mMemoGroup.setVisibility(View.GONE);
+        else {
+            mMemoGroup.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
