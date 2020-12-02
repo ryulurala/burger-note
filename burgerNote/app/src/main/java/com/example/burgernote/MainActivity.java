@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TabHost;
 
 public class MainActivity extends AppCompatActivity {
