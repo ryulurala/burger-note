@@ -1,3 +1,0 @@
-include ':backgroundfab'
-include ':app'
-rootProject.name = "FABTest"
