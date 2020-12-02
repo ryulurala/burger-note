@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 
 public class FloatingViewManager implements FloatingView.Callbacks{
@@ -19,7 +20,7 @@ public class FloatingViewManager implements FloatingView.Callbacks{
     private WindowManager.LayoutParams mLayoutParams;
 
     private FloatingView mFloatingView;         // 첫 번째 떠오를 View
-    private ViewGroup mMemoGroup;
+    private ViewGroup mMemos;
 
     private final int DISPLAY_WIDTH, DISPLAY_HEIGHT;
     private int mMaxX, mMaxY;
@@ -47,13 +48,13 @@ public class FloatingViewManager implements FloatingView.Callbacks{
     }
 
     void setMemos(Memo[] memos){
-        if(mMemoGroup.getChildCount() != 0){
-            mMemoGroup.removeAllViews();
+        if(mMemos.getChildCount() != 0){
+            mMemos.removeAllViews();
         }
 
         for(int i=0; i<memos.length; i++){
-            mMemoGroup.addView(memos[i].mMemoButton);
-            Log.d("myLog", "Child[" + i + "] = " + memos[i].mMemoButton);
+            mMemos.addView(memos[i].mMemoButton);
+//            Log.d("myLog", "Child[" + i + "] = " + memos[i].mMemoButton);
         }
     }
 
@@ -65,7 +66,7 @@ public class FloatingViewManager implements FloatingView.Callbacks{
         mFloatingView = (FloatingView) layoutInflater.inflate(R.layout.view_floating, null);
 
         mFloatingView.setCallbacks(this);
-        mMemoGroup = (ViewGroup) mFloatingView.getChildAt(1);
+        mMemos = (ViewGroup) mFloatingView.getChildAt(1);
     }
 
     void initLayoutParams() {
@@ -103,11 +104,13 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
     void optimizePosition(){
         //최대값 넘어가지 않게 설정
-//        Log.d("myLog", "mLayoutParams(x, y): (" + mLayoutParams.x + ", " + mLayoutParams.y +")");
+        // x축
         if(mLayoutParams.x > mMaxX) mLayoutParams.x = mMaxX;
+        else if(mLayoutParams.x < 0) mLayoutParams.x = 0;
+
+        // y축
         if(mLayoutParams.y > mMaxY) mLayoutParams.y = mMaxY;
-        if(mLayoutParams.x < 0) mLayoutParams.x = 0;
-        if(mLayoutParams.y < 0) mLayoutParams.y = 0;
+        else if(mLayoutParams.y < 0) mLayoutParams.y = 0;
     }
 
     @Override
@@ -129,17 +132,13 @@ public class FloatingViewManager implements FloatingView.Callbacks{
     @Override
     public void onClick() {
         // click 하면 일어날 일
-        // 자식 뷰(index > 0)들을 gone 상태에서 visible 상태로 변경
         Log.d("myLog", "rootView: onClick()");
         showMemoList();
-        // onClick 이 일어날 때마다 MaxPosition 갱신해줘야 함.
     }
 
     private void showMemoList(){
-        if(mMemoGroup.getVisibility() == View.VISIBLE) mMemoGroup.setVisibility(View.GONE);
-        else {
-            mMemoGroup.setVisibility(View.VISIBLE);
-        }
+        if(mMemos.getVisibility() == View.VISIBLE) mMemos.setVisibility(View.GONE);
+        else mMemos.setVisibility(View.VISIBLE);
     }
 
     @Override

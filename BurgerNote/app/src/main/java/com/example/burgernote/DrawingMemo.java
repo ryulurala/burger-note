@@ -3,13 +3,11 @@ package com.example.burgernote;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class DrawMemo extends Memo{
+public class DrawingMemo extends Memo{
 
-    public DrawMemo(Context context){
+    public DrawingMemo(Context context){
         initMemoButton(context);
         setButtonClick();
         initMemoDialog(context);
@@ -31,7 +29,7 @@ public class DrawMemo extends Memo{
     @Override
     void initMemoButton(Context context) {
         super.initMemoButton(context);
-        mMemoButton.setTag("DrawButton");
+        mMemoButton.setTag("DrawingButton");
         mMemoButton.setImageResource(R.mipmap.ic_launcher);      // 리소스 바꾸기
     }
 }
