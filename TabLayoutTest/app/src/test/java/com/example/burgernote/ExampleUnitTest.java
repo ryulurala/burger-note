@@ -1,4 +1,4 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
 import org.junit.Test;
 

@@ -1,8 +1,11 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,35 +14,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class TextMemoAdapter extends RecyclerView.Adapter<TextMemoAdapter.CustomViewHolder> {
+public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.CustomViewHolder> {
 
-    private ArrayList<TextMemoData> arrayList;
+    private ArrayList<DrawingMemoData> arrayList;
 
-    public TextMemoAdapter(ArrayList<TextMemoData> arrayList) {
+    public DrawingMemoAdapter(ArrayList<DrawingMemoData> arrayList) {
         this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
-    public TextMemoAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DrawingMemoAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_memo_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawing_memo_item, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final TextMemoAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final DrawingMemoAdapter.CustomViewHolder holder, int position) {
 
-        holder.text_memo_context.setText(arrayList.get(position).getText_memo_content());
-        holder.text_memo_date.setText(arrayList.get(position).getText_memo_date());
+        String imagePath = "/data/data/com.example.tablayouttest/files/" + arrayList.get(position).getDrawing_memo_image();
+        Bitmap bm = BitmapFactory.decodeFile(imagePath);
+
+        holder.iv_image.setImageBitmap(bm);
+        holder.tv_date.setText(arrayList.get(position).getDrawing_memo_date());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String curName = holder.text_memo_date.getText().toString();
+                String curName = holder.tv_date.getText().toString();
                 Toast.makeText(view.getContext(),curName,Toast.LENGTH_SHORT).show();
             }
         });
@@ -72,13 +78,13 @@ public class TextMemoAdapter extends RecyclerView.Adapter<TextMemoAdapter.Custom
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView text_memo_context;
-        protected TextView text_memo_date;
+        protected ImageView iv_image;
+        protected TextView tv_date;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.text_memo_context = (TextView) itemView.findViewById(R.id.text_memo_context);
-            this.text_memo_date = (TextView) itemView.findViewById(R.id.text_memo_date);
+            this.iv_image = (ImageView) itemView.findViewById(R.id.drawing_memo_image);
+            this.tv_date = (TextView) itemView.findViewById(R.id.drawing_memo_date);
         }
 
     }

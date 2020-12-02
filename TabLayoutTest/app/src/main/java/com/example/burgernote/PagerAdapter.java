@@ -1,4 +1,4 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -1,4 +1,4 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

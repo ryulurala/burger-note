@@ -1,4 +1,4 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,47 +18,49 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class TextMemoListFragment extends Fragment implements View.OnClickListener {
+public class CalendarListFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList<TextMemoData> arrayList;
-    private TextMemoAdapter textMemoAdapter;
+    private ArrayList<CalendarData> arrayList;
+    private CalendarAdapter calendarAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
     SQLiteDatabase db;
-    TextMemoDBHelper helper;
+    CalendarDBHelper helper;
 
     Button addBtn;
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.text_memo_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.calendar_list_fragment, container, false);
 
-        addBtn = view.findViewById(R.id.text_memo_list_add_btn);
+        addBtn = view.findViewById(R.id.calendar_list_add_btn);
         addBtn.setOnClickListener(this);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.tab2_rv);
+        recyclerView = (RecyclerView) view.findViewById(R.id.tab4_rv);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         arrayList = new ArrayList<>();
 
         // DB 가져오기 시작
-        helper = new TextMemoDBHelper(getActivity());
+        helper = new CalendarDBHelper(getActivity());
         db = helper.getReadableDatabase();
         db.beginTransaction();
 
-        Cursor cursor = db.rawQuery("select content, date from tb_text_memo order by _id desc", null);
+        Cursor cursor = db.rawQuery("select content, date, start_time, end_time from tb_calendar order by date, start_time, end_time", null);
         while(cursor.moveToNext()) {
-            TextMemoData data = new TextMemoData(cursor.getString(0), cursor.getString(1));
+            CalendarData data = new CalendarData(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
             arrayList.add(data);
         }
+        db.endTransaction();
         db.close();
         // DB 가져오기 끝
 
-        textMemoAdapter = new TextMemoAdapter(arrayList);
-        recyclerView.setAdapter(textMemoAdapter);
+        calendarAdapter = new CalendarAdapter(arrayList);
+        recyclerView.setAdapter(calendarAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
@@ -67,7 +69,7 @@ public class TextMemoListFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), TextMemoWriteActivity.class);
+        Intent intent = new Intent(getActivity(), CalendarWriteActivity.class);
         startActivity(intent);
     }
 }
