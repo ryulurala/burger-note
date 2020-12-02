@@ -1,9 +1,8 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;

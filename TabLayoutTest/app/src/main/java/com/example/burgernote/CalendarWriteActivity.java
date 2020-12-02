@@ -1,4 +1,4 @@
-package com.example.tablayouttest;
+package com.example.burgernote;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -6,15 +6,14 @@ import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class CalendarWriteActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -84,6 +83,9 @@ public class CalendarWriteActivity extends AppCompatActivity implements View.OnC
         SQLiteDatabase db = helper.getWritableDatabase();
         db.execSQL("insert into tb_calendar (content, date, start_time, end_time) values (?, ?, ?, ?)", new String[]{content, date, startTime, endTime});
         db.close();
+
+        Toast toast = Toast.makeText(getApplicationContext(), "입력이 완료되었습니다,", Toast.LENGTH_SHORT );
+        toast.show();
     }
 
     @Override
