@@ -63,6 +63,7 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
         // 레이아웃을 객체로 만듬(Inflate)
         mFloatingView = (FloatingView) layoutInflater.inflate(R.layout.floating_view, null);
+
         mFloatingView.setCallbacks(this);
         mMemoGroup = (ViewGroup) mFloatingView.getChildAt(1);
     }
