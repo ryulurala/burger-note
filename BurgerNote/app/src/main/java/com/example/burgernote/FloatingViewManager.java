@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
 
 public class FloatingViewManager implements FloatingView.Callbacks{
@@ -52,9 +51,9 @@ public class FloatingViewManager implements FloatingView.Callbacks{
             mMemos.removeAllViews();
         }
 
-        for(int i=0; i<memos.length; i++){
-            mMemos.addView(memos[i].mMemoButton);
-//            Log.d("myLog", "Child[" + i + "] = " + memos[i].mMemoButton);
+        for (Memo memo : memos) {
+            mMemos.addView(memo.mMemoButton);
+            Log.d("myLog", "Child[] = " + memo.mMemoButton);
         }
     }
 
@@ -66,7 +65,7 @@ public class FloatingViewManager implements FloatingView.Callbacks{
         mFloatingView = (FloatingView) layoutInflater.inflate(R.layout.view_floating, null);
 
         mFloatingView.setCallbacks(this);
-        mMemos = (ViewGroup) mFloatingView.getChildAt(1);
+        mMemos = (ViewGroup) mFloatingView.getChildAt(mFloatingView.getChildCount()-1);
     }
 
     void initLayoutParams() {
@@ -96,10 +95,6 @@ public class FloatingViewManager implements FloatingView.Callbacks{
         }
         // dp
         mLayoutParams.gravity = Gravity.TOP | Gravity.START;        // 필수! 기준을 만듬 TOP | LEFT
-
-        // 크기 조절
-//        mLayoutParams.width = 200;
-//        mLayoutParams.height = 400;
     }
 
     void optimizePosition(){
@@ -133,6 +128,10 @@ public class FloatingViewManager implements FloatingView.Callbacks{
     public void onClick() {
         // click 하면 일어날 일
         Log.d("myLog", "rootView: onClick()");
+        if(mFloatingView.mAdded) {
+            mFloatingView.removeViewAt(1);
+            mFloatingView.mAdded = false;
+        }
         showMemoList();
     }
 

@@ -18,12 +18,8 @@ public class DrawingMemo extends Memo{
     @Override
     void initMemoDialog(Context context) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_drawing, null);     // 리소스 바꾸기
-    }
-
-    @Override
-    void setButtonClick() {
-        super.setButtonClick();
+        mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_drawing, null);
+        super.initMemoDialog(context);
     }
 
     @Override

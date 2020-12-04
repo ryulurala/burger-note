@@ -6,7 +6,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 
@@ -19,6 +18,7 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
     private int mDownRawX, mDownRawY;					// 움직이기 위해 터치한 시작 점
     private int mLastX, mLastY;       // 움직이기 이전에 뷰가 마지막으로 위치한 점
     private boolean mOneTime;        // for. setMaxPosition()
+    protected boolean mAdded;
 
     public FloatingView(Context context) {
         this(context, null);
@@ -37,6 +37,7 @@ public class FloatingView extends LinearLayout implements View.OnTouchListener {
         setOnTouchListener(this);
         mGestureDetector = new GestureDetector(context, new GestureListener());     // for. onclick()
         mOneTime = false;
+        mAdded = false;
     }
 
     void setCallbacks(Callbacks callbacks){
