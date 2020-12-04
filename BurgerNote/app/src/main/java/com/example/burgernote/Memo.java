@@ -37,15 +37,15 @@ public abstract class Memo {
     }
 
     void initMemoDialog(Context context){
-        float dp = context.getResources().getDisplayMetrics().density;
+        float dp = context.getResources().getDisplayMetrics().density;      // dp
         int width =(int) (300 * dp);
         int height =(int) (280 * dp);
 
+        // layoutParams 초기화
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
 
         mMemoDialog.setLayoutParams(layoutParams);
     }
-
 
     void setAnimation(Context context){
         mAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_up);     // 애니메이션 리소스 지정
@@ -56,16 +56,14 @@ public abstract class Memo {
         mMemoButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d("myLog", "onClick() = " + v.getTag());
-                // 각 tag 에 맞는 Dialog 띄워주기
                 FloatingView floatingView = (FloatingView) mMemoButton.getRootView();
                 LinearLayout mMemos = (LinearLayout) floatingView.getChildAt(1);
 
-                floatingView.addView(mMemoDialog, 1);
-                mMemos.setVisibility(View.GONE);
+                floatingView.addView(mMemoDialog, 1);       // dialog 추가
+                mMemos.setVisibility(View.GONE);        // list 감추기
 
-                floatingView.mAdded = true;
-                mMemoDialog.startAnimation(mAnimation);
+                floatingView.mAdded = true;         // dialog 추가 state
+                mMemoDialog.startAnimation(mAnimation);         // start animation
             }
         });
     }

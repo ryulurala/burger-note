@@ -25,7 +25,6 @@ public class DrawingMemo extends Memo{
     @Override
     void initMemoButton(Context context) {
         super.initMemoButton(context);
-        mMemoButton.setTag("DrawingButton");
         mMemoButton.setImageResource(R.mipmap.ic_launcher);      // 리소스 바꾸기
     }
 }
