@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class DrawingMemoListFragment extends Fragment implements View.OnClickListener {
+public class DrawingMemoListFragment extends Fragment {
 
     private ArrayList<DrawingMemoData> arrayList;
     private DrawingMemoAdapter drawingMemoAdapter;
@@ -30,15 +28,10 @@ public class DrawingMemoListFragment extends Fragment implements View.OnClickLis
     SQLiteDatabase db;
     DrawingMemoDBHelper helper;
 
-    Button addBtn;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.drawing_memo_list_fragment, container, false);
-
-        addBtn = view.findViewById(R.id.drawing_memo_list_add_btn);
-        addBtn.setOnClickListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.tab1_rv);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -66,11 +59,5 @@ public class DrawingMemoListFragment extends Fragment implements View.OnClickLis
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), DrawingMemoWriteActivity.class);
-        startActivity(intent);
     }
 }

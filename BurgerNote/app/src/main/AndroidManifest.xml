@@ -25,7 +25,6 @@
         </service>
         <activity android:name=".CalendarWriteActivity"/>
         <activity android:name=".TextMemoWriteActivity"/>
-        <activity android:name=".DrawingMemoWriteActivity"/>
     </application>
 
 </manifest>

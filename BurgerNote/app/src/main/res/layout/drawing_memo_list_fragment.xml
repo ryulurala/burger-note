@@ -27,16 +27,6 @@
                 android:gravity="bottom"
                 android:layout_gravity="center" />
 
-            <Button
-                android:id="@+id/drawing_memo_list_add_btn"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:minHeight="0dp"
-                android:text="추가"
-                android:textColor="@color/gray9"
-                android:textSize="14dp"
-                android:gravity="bottom|center" />
-
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -2,6 +2,7 @@ package com.example.burgernote;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,19 +11,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class DrawingMemo extends Memo implements View.OnClickListener{
 
     private DrawingView mDrawingView;
+    private Context mContext;
 
     public DrawingMemo(Context context){
         initMemoButton(context);
         initMemoDialog(context);
         setButtonClick();
         setAnimation(context, R.anim.scale_up);
+        mContext = context;
     }
 
     @Override
@@ -128,7 +136,45 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
         }
 
         void save(){
+            // 지금 시간을 yyyy년 MN월 dd일 HH시 mm분 포맷의 문자열로 저장합니다.
+            String date = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분").format(new Date());
 
+            // saveImage() 함수를 이용해 이미지를 저장하고 그 파일명을 return 받습니다.
+            String image = saveImage();
+
+            if(!image.equals("Exception")){
+                DrawingMemoDBHelper helper = new DrawingMemoDBHelper(mContext);
+
+                SQLiteDatabase db = helper.getWritableDatabase();
+                db.execSQL("insert into tb_drawing_memo (image, date) values (?, ?)", new String[]{image, date});
+                db.close();
+
+                // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
+                Toast toast = Toast.makeText(mContext, "입력이 완료되었습니다,", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+
+        private String saveImage(){
+            FileOutputStream outStream;
+            try {
+                String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".png";
+                File file = new File(mContext.getFilesDir(), fileName);
+
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                outStream = new FileOutputStream(file);
+                mBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                outStream.flush();
+                outStream.close();
+
+                return fileName;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception";
+            }
         }
     }
 }
