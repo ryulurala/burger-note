@@ -18,7 +18,7 @@ public class FloatingViewManager implements FloatingView.Callbacks{
     private final WindowManager WINDOW_MANAGER;
     private WindowManager.LayoutParams mLayoutParams;
 
-    private FloatingView mFloatingView;         // 첫 번째 떠오를 View
+    private FloatingView mFloatingView;         // root View Group
     private ViewGroup mMemos;
 
     private final int DISPLAY_WIDTH, DISPLAY_HEIGHT;
@@ -53,7 +53,6 @@ public class FloatingViewManager implements FloatingView.Callbacks{
 
         for (Memo memo : memos) {
             mMemos.addView(memo.mMemoButton);
-            Log.d("myLog", "Child[] = " + memo.mMemoButton);
         }
     }
 
