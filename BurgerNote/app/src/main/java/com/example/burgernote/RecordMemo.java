@@ -11,7 +11,7 @@ public class RecordMemo extends Memo{
         initMemoButton(context);
         setButtonClick();
         initMemoDialog(context);
-        setAnimation(context);
+        setAnimation(context, R.anim.scale_up);
     }
 
     @SuppressLint("InflateParams")

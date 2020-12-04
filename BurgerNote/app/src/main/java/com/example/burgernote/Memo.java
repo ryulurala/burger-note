@@ -37,8 +37,8 @@ public abstract class Memo {
 
     void initMemoDialog(Context context){
         float dp = context.getResources().getDisplayMetrics().density;      // dp
-        int width =(int) (300 * dp);
-        int height =(int) (280 * dp);
+        int width = (int) (300 * dp);
+        int height = (int) (280 * dp);
 
         // layoutParams 초기화
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
@@ -46,8 +46,8 @@ public abstract class Memo {
         mMemoDialog.setLayoutParams(layoutParams);
     }
 
-    void setAnimation(Context context){
-        mAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_up);     // 애니메이션 리소스 지정
+    void setAnimation(Context context, int id){
+        mAnimation = AnimationUtils.loadAnimation(context, id);     // 애니메이션 리소스 지정
         mAnimation.setFillAfter(true);          // 끝난 상태로 유지
     }
 

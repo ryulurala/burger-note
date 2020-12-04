@@ -62,6 +62,9 @@ public class DrawingMemoWriteActivity extends AppCompatActivity implements View.
         int testImageID = getResources().getIdentifier(testImageFileName, "drawable", getPackageName());
         Bitmap image = BitmapFactory.decodeResource( getResources(), testImageID );
 
+
+        /////////////////////////////////////
+
         FileOutputStream outStream;
         try {
             String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".png";
