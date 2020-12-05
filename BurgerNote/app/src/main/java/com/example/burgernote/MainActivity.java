@@ -1,6 +1,7 @@
 package com.example.burgernote;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.TargetApi;
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        checkPermission();      // 권한 검사
+        checkPermission();      // 권한 검사 및 시작
         if(mBound){
             mService.hideView();
         }
@@ -158,4 +159,5 @@ public class MainActivity extends AppCompatActivity {
             unbindService(mConnection);
         }
     }
+
 }

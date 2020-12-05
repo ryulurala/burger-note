@@ -3,6 +3,7 @@ package com.example.burgernote;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,45 +12,43 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DrawingMemoListFragment extends Fragment {
+public class DrawingMemoListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<DrawingMemoData> arrayList;
-    private DrawingMemoAdapter drawingMemoAdapter;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-
-    SQLiteDatabase db;
-    DrawingMemoDBHelper helper;
+    private SwipeRefreshLayout mSwipeRefreshLayout = null;
+    private final ArrayList<DrawingMemoData> mMemoDataArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.drawing_memo_list_fragment, container, false);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.tab1_rv);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.tab1_rv);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        DrawingMemoDBHelper mMemoDBHelper = new DrawingMemoDBHelper(getActivity());
 
-        arrayList = new ArrayList<>();
+        recyclerView.setLayoutManager(mLinearLayoutManager);
+
+        mMemoDataArrayList.clear();
 
         // DB 가져오기 시작
-        helper = new DrawingMemoDBHelper(getActivity());
-        db = helper.getReadableDatabase();
+        SQLiteDatabase db = mMemoDBHelper.getReadableDatabase();
         db.beginTransaction();
 
         Cursor cursor = db.rawQuery("select image, date from tb_drawing_memo order by _id desc", null);
         while(cursor.moveToNext()) {
             DrawingMemoData data = new DrawingMemoData(cursor.getString(0), cursor.getString(1));
-            arrayList.add(data);
+            mMemoDataArrayList.add(data);
         }
         db.endTransaction();
         db.close();
@@ -62,11 +61,20 @@ public class DrawingMemoListFragment extends Fragment {
             e.printStackTrace();
         }
 
-        drawingMemoAdapter = new DrawingMemoAdapter(arrayList, filePath + "/");
+        DrawingMemoAdapter drawingMemoAdapter = new DrawingMemoAdapter(mMemoDataArrayList, filePath + "/");
         recyclerView.setAdapter(drawingMemoAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
         return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        // 새로 고침
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        
+        mSwipeRefreshLayout.setRefreshing(false);        // 새로 고침 완료
     }
 }

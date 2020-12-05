@@ -150,7 +150,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
                 db.close();
 
                 // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
-                Toast toast = Toast.makeText(mContext, "입력이 완료되었습니다,", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(mContext, "Image Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
@@ -161,12 +161,6 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             try {
                 String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".png";
                 File file = new File(mContext.getFilesDir(), fileName);
-
-                Log.d("myLog", "file dir = "+mContext.getFilesDir());
-
-                Log.d("myLog", "file (A) path = "+file.getAbsolutePath());
-                Log.d("myLog", "file (P) path = "+file.getPath());
-                Log.d("myLog", "file (C) path = "+file.getCanonicalPath());
 
                 if (!file.exists()) {
                     file.createNewFile();
