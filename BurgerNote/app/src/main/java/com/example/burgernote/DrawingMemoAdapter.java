@@ -16,10 +16,12 @@ import java.util.ArrayList;
 
 public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.CustomViewHolder> {
 
-    private ArrayList<DrawingMemoData> arrayList;
+    private final ArrayList<DrawingMemoData> MEMO_DATA_LIST;
+    private final String IMAGE_PATH;
 
-    public DrawingMemoAdapter(ArrayList<DrawingMemoData> arrayList) {
-        this.arrayList = arrayList;
+    public DrawingMemoAdapter(ArrayList<DrawingMemoData> arrayList, String filePath) {
+        this.MEMO_DATA_LIST = arrayList;
+        IMAGE_PATH = filePath;
     }
 
     @NonNull
@@ -27,19 +29,18 @@ public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.
     public DrawingMemoAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawing_memo_item, parent, false);
-        CustomViewHolder holder = new CustomViewHolder(view);
 
-        return holder;
+        return new CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final DrawingMemoAdapter.CustomViewHolder holder, int position) {
 
-        String imagePath = "/data/data/com.example.tablayouttest/files/" + arrayList.get(position).getDrawing_memo_image();
+        String imagePath = IMAGE_PATH + MEMO_DATA_LIST.get(position).getDrawing_memo_image();
         Bitmap bm = BitmapFactory.decodeFile(imagePath);
 
         holder.iv_image.setImageBitmap(bm);
-        holder.tv_date.setText(arrayList.get(position).getDrawing_memo_date());
+        holder.tv_date.setText(MEMO_DATA_LIST.get(position).getDrawing_memo_date());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +64,12 @@ public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.
 
     @Override
     public int getItemCount() {
-        return (null != arrayList ? arrayList.size() : 0);
+        return (null != MEMO_DATA_LIST ? MEMO_DATA_LIST.size() : 0);
     }
 
     public void remove(int position){
         try {
-            arrayList.remove(position);
+            MEMO_DATA_LIST.remove(position);
             notifyItemRemoved(position);
         } catch (IndexOutOfBoundsException ex){
             ex.printStackTrace();

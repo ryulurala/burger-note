@@ -157,9 +157,16 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
 
         private String saveImage(){
             FileOutputStream outStream;
+
             try {
                 String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".png";
                 File file = new File(mContext.getFilesDir(), fileName);
+
+                Log.d("myLog", "file dir = "+mContext.getFilesDir());
+
+                Log.d("myLog", "file (A) path = "+file.getAbsolutePath());
+                Log.d("myLog", "file (P) path = "+file.getPath());
+                Log.d("myLog", "file (C) path = "+file.getCanonicalPath());
 
                 if (!file.exists()) {
                     file.createNewFile();

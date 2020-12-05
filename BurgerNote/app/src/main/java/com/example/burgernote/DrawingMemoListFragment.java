@@ -1,13 +1,12 @@
 package com.example.burgernote;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DrawingMemoListFragment extends Fragment {
@@ -53,7 +55,14 @@ public class DrawingMemoListFragment extends Fragment {
         db.close();
         // DB 가져오기 끝
 
-        drawingMemoAdapter = new DrawingMemoAdapter(arrayList);
+        String filePath = "";
+        try {
+            filePath = getContext().getFilesDir().getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        drawingMemoAdapter = new DrawingMemoAdapter(arrayList, filePath + "/");
         recyclerView.setAdapter(drawingMemoAdapter);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
