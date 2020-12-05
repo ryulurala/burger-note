@@ -75,8 +75,8 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.draw_copy:
-                mDrawingView.copy();
+            case R.id.draw_share:
+                mDrawingView.share();
                 break;
             case R.id.draw_erase:
                 mDrawingView.erase();
@@ -137,118 +137,76 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             return super.onTouchEvent(event);
         }
 
+        void setBaseColor(){
+            mPaint.setColor(Color.RED);
+            mPaint.setColor(Color.GREEN);
+            mPaint.setColor(Color.BLUE);
+
+            invalidate();
+        }
+
+        void setPaintColor(){
+            mBitmap.eraseColor(Color.BLACK);
+            mBitmap.eraseColor(Color.WHITE);
+
+            invalidate();
+        }
+
         void erase(){
             mBitmap.eraseColor(Color.WHITE);
 
             invalidate();
         }
 
-        void copy(){
-            Uri uri;
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.Images.Media.TITLE, "Temp");
-                contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/Download");
-                contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                uri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                OutputStream outputStream = null;
-                try {
-                    outputStream = mContext.getContentResolver().openOutputStream(uri);
-                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else{
-                String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString()
-                        +File.separator+"download";
-                File file = new File(dir);
-                if(!file.exists()) file.mkdirs();
-                File imgFile = new File(file, "copy.jpg");
-                try {
-                    FileOutputStream outputStream = new FileOutputStream(imgFile);
-                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MediaStore.Images.Media.TITLE, "Temp");
-                contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                contentValues.put(MediaStore.Images.Media.BUCKET_ID, "Temp");
-                contentValues.put(MediaStore.Images.Media.DATA, imgFile.getAbsolutePath());
-                contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-
-                mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-                uri = Uri.fromFile(imgFile);
-            }
-            // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
-            Toast toast = Toast.makeText(mContext, "Image copied", Toast.LENGTH_SHORT);
-            toast.show();
-
-//            String path = MediaStore.Images.Media.insertImage
-//                    (mContext.getContentResolver(),
-//                            mBitmap, "Temp", null);
-//            Uri dd = Uri.parse(path);
-//            Log.d("myLog", "path = " + dd);
-            mContext.sendBroadcast(new Intent( Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+        void share(){
+            // Bitmap -> URI
+            String path = MediaStore.Images.Media.insertImage(
+                    mContext.getContentResolver(),
+                    mBitmap,
+                    "Temp",
+                    null
+            );
+            Uri uri = Uri.parse(path);
 
             Log.d("myLog", "uri = "+ uri);
 
-//            Intent intent = new Intent(Intent.ACTION_SEND); //전송 메소드를 호출합니다. Intent.ACTION_SEND
-//            intent.setType("image/jpg"); //jpg 이미지를 공유 하기 위해 Type 을 정의합니다.
-//            intent.putExtra(Intent.EXTRA_STREAM, dd); //사진의 Uri 를 가지고 옵니다.
-//            mContext.startActivity(Intent.createChooser(intent, "Choose")); // Activity 를 이용하여 호출 합니다.
+            // 이미지 공유
+            Intent intent = new Intent(Intent.ACTION_SEND);     // 전송 메소드를 호출합니다. Intent.ACTION_SEND
+            intent.setType("image/jpg");        // jpg 이미지를 공유 하기 위해 Type 을 정의합니다.
+            intent.putExtra(Intent.EXTRA_STREAM, uri);      // 사진의 Uri 를 가지고 옵니다.
+            mContext.startActivity(Intent.createChooser(intent, "Share")); // Activity 를 이용하여 호출 합니다.
         }
 
         void save(){
-            // 지금 시간을 yyyy년 MN월 dd일 HH시 mm분 포맷의 문자열로 저장합니다.
-            String date = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분").format(new Date());
+            try{
+                // 지금 시간을 yyyy년 MN월 dd일 HH시 mm분 포맷의 문자열로 저장합니다.
+                String date = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분").format(new Date());
 
-            // saveImage() 함수를 이용해 이미지를 저장하고 그 파일명을 return 받습니다.
-            String image = saveImage();
+                String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".png";
+                File file = new File(mContext.getFilesDir(), fileName);
 
-            if(!image.equals("Exception")){
+                if (!file.exists()) file.createNewFile();
+
+                FileOutputStream outStream = new FileOutputStream(file);
+                mBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                outStream.flush();
+                outStream.close();
+
                 DrawingMemoDBHelper helper = new DrawingMemoDBHelper(mContext);
 
                 SQLiteDatabase db = helper.getWritableDatabase();
-                db.execSQL("insert into tb_drawing_memo (image, date) values (?, ?)", new String[]{image, date});
+                db.execSQL("insert into tb_drawing_memo (fileName, date) values (?, ?)", new String[]{fileName, date});
                 db.close();
 
                 // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
                 Toast toast = Toast.makeText(mContext, "Image Saved", Toast.LENGTH_SHORT);
                 toast.show();
-            }
-        }
 
-        private String saveImage(){
-            FileOutputStream outStream;
-
-            try {
-                String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".png";
-                File file = new File(mContext.getFilesDir(), fileName);
-
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-
-                outStream = new FileOutputStream(file);
-                mBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                outStream.flush();
-                outStream.close();
-
-                return fileName;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Exception";
+            } catch(Exception e) {
+                // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
+                Toast toast = Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT);
+                toast.show();
+                return;
             }
         }
     }
