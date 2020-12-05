@@ -1,7 +1,5 @@
 package com.example.burgernote;
 
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,23 +8,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.core.content.FileProvider;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -50,13 +42,13 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
         mMemoButton.setImageResource(R.mipmap.ic_launcher);      // 리소스 바꾸기
     }
 
-    @SuppressLint("InflateParams")
     @Override
     void initMemoDialog(Context context) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_drawing, null);
 
         mDrawingView = new DrawingView(context);
+        mDrawingView.setPaintButton(mMemoDialog.findViewById(R.id.draw_paint));
         ((LinearLayout)mMemoDialog.getChildAt(0)).addView(mDrawingView);
 
         super.initMemoDialog(context);
@@ -75,14 +67,17 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.draw_share:
-                mDrawingView.share();
-                break;
             case R.id.draw_erase:
                 mDrawingView.erase();
                 break;
+            case R.id.draw_share:
+                mDrawingView.share();
+                break;
             case R.id.draw_save:
                 mDrawingView.save();
+                break;
+            case R.id.draw_paint:
+                mDrawingView.changePaintColor();
                 break;
         }
     }
@@ -91,7 +86,9 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
         private Canvas mCanvas;
         private Bitmap mBitmap;
         private Paint mPaint;
+        private ImageButton mPaintButton;
 
+        private int paintIndex;
         private int mLastX, mLastY;
 
         public DrawingView(Context context) {
@@ -101,6 +98,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             mPaint.setStrokeWidth(2.0f);
             mCanvas = new Canvas();
             mCanvas.drawColor(Color.WHITE);
+            paintIndex = 0;
         }
 
         @Override
@@ -137,19 +135,27 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             return super.onTouchEvent(event);
         }
 
-        void setBaseColor(){
-            mPaint.setColor(Color.RED);
-            mPaint.setColor(Color.GREEN);
-            mPaint.setColor(Color.BLUE);
+        void changePaintColor(){
+            paintIndex = (paintIndex + 1) % 4;
 
-            invalidate();
-        }
-
-        void setPaintColor(){
-            mBitmap.eraseColor(Color.BLACK);
-            mBitmap.eraseColor(Color.WHITE);
-
-            invalidate();
+            switch (paintIndex){
+                case 0:
+                    mPaint.setColor(Color.BLACK);
+                    mPaintButton.setImageResource(R.color.black);
+                    break;
+                case 1:
+                    mPaint.setColor(Color.RED);
+                    mPaintButton.setImageResource(R.color.red);
+                    break;
+                case 2:
+                    mPaint.setColor(Color.GREEN);
+                    mPaintButton.setImageResource(R.color.green);
+                    break;
+                case 3:
+                    mPaint.setColor(Color.BLUE);
+                    mPaintButton.setImageResource(R.color.blue);
+                    break;
+            }
         }
 
         void erase(){
@@ -171,10 +177,13 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             Log.d("myLog", "uri = "+ uri);
 
             // 이미지 공유
-            Intent intent = new Intent(Intent.ACTION_SEND);     // 전송 메소드를 호출합니다. Intent.ACTION_SEND
-            intent.setType("image/jpg");        // jpg 이미지를 공유 하기 위해 Type 을 정의합니다.
-            intent.putExtra(Intent.EXTRA_STREAM, uri);      // 사진의 Uri 를 가지고 옵니다.
-            mContext.startActivity(Intent.createChooser(intent, "Share")); // Activity 를 이용하여 호출 합니다.
+            Intent intent = new Intent(Intent.ACTION_SEND);     // 전송 메소드를 호출
+            intent.setType("image/jpg");        // jpg 이미지를 공유 하기 위해 Type 을 정의
+            intent.putExtra(Intent.EXTRA_STREAM, uri);      // 사진의 Uri 로드
+            Intent chooser = Intent.createChooser(intent, "Share");
+            if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                mContext.startActivity(chooser);        // Activity 를 이용하여 호출
+            }
         }
 
         void save(){
@@ -195,7 +204,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
                 DrawingMemoDBHelper helper = new DrawingMemoDBHelper(mContext);
 
                 SQLiteDatabase db = helper.getWritableDatabase();
-                db.execSQL("insert into tb_drawing_memo (fileName, date) values (?, ?)", new String[]{fileName, date});
+                db.execSQL("insert into tb_drawing_memo (image, date) values (?, ?)", new String[]{fileName, date});
                 db.close();
 
                 // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
@@ -208,6 +217,10 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
                 toast.show();
                 return;
             }
+        }
+
+        void setPaintButton(ImageButton imageButton){
+            this.mPaintButton = imageButton;
         }
     }
 }

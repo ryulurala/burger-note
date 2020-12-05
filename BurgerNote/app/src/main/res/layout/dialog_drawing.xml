@@ -19,36 +19,19 @@
         android:orientation="horizontal"
         android:layout_weight="1">
 
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:layout_weight="0.5"
-            android:src="@color/white"
-            android:id="@+id/draw_base"/>
-
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:id="@+id/draw_erase"
             android:text="erase"/>
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:layout_weight="0.5"
-            android:src="@color/black"
-            android:id="@+id/draw_paint"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:layout_weight="1"
-            android:background="@drawable/ic_launcher_background"
             android:id="@+id/draw_share"
             android:text="share"/>
 
@@ -57,9 +40,16 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:layout_weight="1"
-            android:background="@drawable/ic_launcher_background"
             android:id="@+id/draw_save"
             android:text="save"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:layout_weight="0.5"
+            android:src="@color/black"
+            android:id="@+id/draw_paint"/>
 
 
     </LinearLayout>
