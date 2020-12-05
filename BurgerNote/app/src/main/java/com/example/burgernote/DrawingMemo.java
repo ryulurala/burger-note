@@ -1,12 +1,16 @@
 package com.example.burgernote;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -132,7 +137,10 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
         }
 
         void copy(){
+            ClipboardManager clipboardManager = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
 
+            ClipData clipData = ClipData.newUri(mContext.getContentResolver(), "DrawMemo", getImageUri());
+            clipboardManager.setPrimaryClip(clipData);
         }
 
         void save(){
@@ -153,6 +161,20 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
                 Toast toast = Toast.makeText(mContext, "Image Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
+        }
+
+        private Uri getImageUri(){
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(
+                    mContext.getContentResolver(),
+                    mBitmap,
+                    "Temp",
+                    null
+            );
+            Log.d("myLog", "path = "+ path);
+            Log.d("myLog", "Uri = "+Uri.parse(path));
+            return Uri.parse(path);
         }
 
         private String saveImage(){
