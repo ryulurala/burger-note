@@ -1,15 +1,17 @@
 package com.example.burgernote;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,9 +20,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import androidx.core.content.FileProvider;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -103,6 +109,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             if(mBitmap != null) canvas.drawBitmap(mBitmap, 0, 0, null);
             else {
                 mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+                mBitmap.eraseColor(Color.WHITE);
                 mCanvas.setBitmap(mBitmap);     // 연결
                 Log.d("myLog", "onDraw() = " + getWidth() + ", "+getHeight());
             }
@@ -137,10 +144,69 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
         }
 
         void copy(){
-            ClipboardManager clipboardManager = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            Uri uri;
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MediaStore.Images.Media.TITLE, "Temp");
+                contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+                contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/Download");
+                contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+                uri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                OutputStream outputStream = null;
+                try {
+                    outputStream = mContext.getContentResolver().openOutputStream(uri);
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString()
+                        +File.separator+"download";
+                File file = new File(dir);
+                if(!file.exists()) file.mkdirs();
+                File imgFile = new File(file, "copy.jpg");
+                try {
+                    FileOutputStream outputStream = new FileOutputStream(imgFile);
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MediaStore.Images.Media.TITLE, "Temp");
+                contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+                contentValues.put(MediaStore.Images.Media.BUCKET_ID, "Temp");
+                contentValues.put(MediaStore.Images.Media.DATA, imgFile.getAbsolutePath());
+                contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 
-            ClipData clipData = ClipData.newUri(mContext.getContentResolver(), "DrawMemo", getImageUri());
-            clipboardManager.setPrimaryClip(clipData);
+                mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+                uri = Uri.fromFile(imgFile);
+            }
+            // 서비스가 20초 동안 잡으면 ANR 에러, 메인 스레드임
+            Toast toast = Toast.makeText(mContext, "Image copied", Toast.LENGTH_SHORT);
+            toast.show();
+
+//            String path = MediaStore.Images.Media.insertImage
+//                    (mContext.getContentResolver(),
+//                            mBitmap, "Temp", null);
+//            Uri dd = Uri.parse(path);
+//            Log.d("myLog", "path = " + dd);
+            mContext.sendBroadcast(new Intent( Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+
+            Log.d("myLog", "uri = "+ uri);
+
+//            Intent intent = new Intent(Intent.ACTION_SEND); //전송 메소드를 호출합니다. Intent.ACTION_SEND
+//            intent.setType("image/jpg"); //jpg 이미지를 공유 하기 위해 Type 을 정의합니다.
+//            intent.putExtra(Intent.EXTRA_STREAM, dd); //사진의 Uri 를 가지고 옵니다.
+//            mContext.startActivity(Intent.createChooser(intent, "Choose")); // Activity 를 이용하여 호출 합니다.
         }
 
         void save(){
@@ -161,20 +227,6 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
                 Toast toast = Toast.makeText(mContext, "Image Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
-        }
-
-        private Uri getImageUri(){
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            String path = MediaStore.Images.Media.insertImage(
-                    mContext.getContentResolver(),
-                    mBitmap,
-                    "Temp",
-                    null
-            );
-            Log.d("myLog", "path = "+ path);
-            Log.d("myLog", "Uri = "+Uri.parse(path));
-            return Uri.parse(path);
         }
 
         private String saveImage(){

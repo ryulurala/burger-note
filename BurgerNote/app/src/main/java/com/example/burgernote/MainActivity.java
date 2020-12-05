@@ -1,8 +1,11 @@
 package com.example.burgernote;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
@@ -106,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
         closeService();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode != 200 || grantResults.length <= 0){
+            finish();
+        }
+    }
+
     @TargetApi(Build.VERSION_CODES.M)       // M버전 이상인 경우에만 적용 메소드
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -135,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             } else {         // 이미 권한을 받았다.
                 openService();
             }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
         } else {        // 마시멜로우 미만 버전은 이미 설치했을 경우 권한 체크를 했다.
             openService();
         }
