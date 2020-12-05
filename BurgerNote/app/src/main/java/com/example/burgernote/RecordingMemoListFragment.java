@@ -20,7 +20,10 @@ public class RecordingMemoListFragment extends Fragment {
         // 이 프래그먼트의 xml 파일은 recording_memo_list_fragment.xml 입니다.
 
         // 이 프래그먼트와 비슷한 동작을 하는 프래그먼트는
-        // 그림 메모에 쓰인 DrawingMemoListFragment가 있습니다.
+        // 성률님이 작업하신 그림 메모에 쓰인 DrawingMemoListFragment가 있습니다.
+        // 혹은 제가 작업한 CalendarListFragment, TextMemoFragment가 있습니다.
+        // 성률님이 작업한거랑 제가 작업한거 중에 하나 보시고 따라하시면 될 것 같습니다.
+        // 기능상에 큰 차이는 없습니다. 
 
         // 이 프래그먼트에 기본적으로 필요한 xml 파일 세팅은
         // recording_memo_list_fragment.xml 에 해두었습니다.
