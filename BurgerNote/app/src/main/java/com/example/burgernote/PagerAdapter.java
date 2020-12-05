@@ -28,7 +28,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return tab2;
 
             case 2:
-                TabFragment3 tab3 = new TabFragment3();
+                RecordingMemoListFragment tab3 = new RecordingMemoListFragment();
                 return tab3;
 
             case 3:

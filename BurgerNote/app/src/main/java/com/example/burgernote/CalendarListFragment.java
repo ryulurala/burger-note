@@ -12,18 +12,21 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 
-public class CalendarListFragment extends Fragment implements View.OnClickListener {
+public class CalendarListFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private ArrayList<CalendarData> arrayList;
     private CalendarAdapter calendarAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout = null;
 
     SQLiteDatabase db;
     CalendarDBHelper helper;
@@ -35,11 +38,14 @@ public class CalendarListFragment extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.calendar_list_fragment, container, false);
+        mSwipeRefreshLayout = view.findViewById(R.id.calendar_swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        recyclerView = (RecyclerView) view.findViewById(R.id.tab4_rv);
 
         addBtn = view.findViewById(R.id.calendar_list_add_btn);
         addBtn.setOnClickListener(this);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.tab4_rv);
+
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -71,5 +77,13 @@ public class CalendarListFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         Intent intent = new Intent(getActivity(), CalendarWriteActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
+        mSwipeRefreshLayout.setRefreshing(false);        // 새로 고침 완료
     }
 }

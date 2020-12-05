@@ -17,6 +17,8 @@ public class TabFragment5 extends Fragment {
 
         View view = inflater.inflate(R.layout.tab5_fragment, container, false);
 
+        // 설정탭 프래그먼트입니다.
+
         return view;
     }
 }
