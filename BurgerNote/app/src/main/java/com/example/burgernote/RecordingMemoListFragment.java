@@ -1,5 +1,7 @@
 package com.example.burgernote;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 public class RecordingMemoListFragment extends Fragment {
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
 
         // 어플 내부에서 여태껏 녹음한 음성 메모의 리스트를 보여주는 프래그먼트입니다.
         // 이 프래그먼트는 main activity 상에서 작동하며
