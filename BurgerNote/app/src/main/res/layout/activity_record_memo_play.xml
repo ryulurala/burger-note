@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/record_play_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="@color/gray9"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/record_play_length"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textColor="@color/gray9"
+        android:textSize="14dp"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/record_reset_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="처음"
+            android:textColor="@color/gray0"
+            android:background="@drawable/filled_button"
+            app:tabIconTint="@color/tab_icon_color" />
+
+        <Button
+            android:id="@+id/record_play_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:text="재생"
+            android:textColor="@color/gray0"
+            android:background="@drawable/filled_button"
+            app:tabIconTint="@color/tab_icon_color" />
+
+        <Button
+            android:id="@+id/record_close_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="닫기"
+            android:textColor="@color/gray0"
+            android:background="@drawable/filled_button"
+            app:tabIconTint="@color/tab_icon_color" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

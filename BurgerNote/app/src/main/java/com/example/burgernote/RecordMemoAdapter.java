@@ -1,6 +1,7 @@
 package com.example.burgernote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,14 @@ public class RecordMemoAdapter extends RecyclerView.Adapter<RecordMemoAdapter.Cu
 
             @Override
             public void onClick(View view) {
-                // 여기에 한 번 터치했을때 동작을 기술해야합니다.
+                Intent intent = new Intent(view.getContext(), RecordMemoPlay.class);
+
+                intent.putExtra("record_id",MEMO_DATA_LIST.get(position).getRecord_id());
+                intent.putExtra("record_title",MEMO_DATA_LIST.get(position).getRecord_title());
+                intent.putExtra("record_length",MEMO_DATA_LIST.get(position).getRecord_length());
+                intent.putExtra("record_date",MEMO_DATA_LIST.get(position).getRecord_date());
+
+                view.getContext().startActivity(intent);
             }
         });
     }

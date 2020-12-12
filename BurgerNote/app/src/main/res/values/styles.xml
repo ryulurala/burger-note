@@ -34,4 +34,8 @@
         <item name="android:fontFamily">@font/apple_sd_gothic_neo</item>
     </style>
 
+    <style name="AppThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
