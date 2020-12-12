@@ -1,21 +1,16 @@
 package com.example.burgernote;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.io.IOException;
 
 public class RecordMemoPlay extends AppCompatActivity implements View.OnClickListener {
 
