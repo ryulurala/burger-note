@@ -3,7 +3,71 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
     android:clickable="true"
     android:focusable="true">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/record_background"
+            android:indeterminate="false"
+            android:layout_gravity="center"/>
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/record_start"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_media_play"
+            android:layout_gravity="center|bottom"/>
+
+        <ImageButton
+            android:id="@+id/record_stop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_media_stop"
+            android:layout_gravity="center|bottom"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="share"
+            android:textSize="15sp"
+            android:id="@+id/record_share"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="save"
+            android:textSize="15sp"
+            android:id="@+id/record_save"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

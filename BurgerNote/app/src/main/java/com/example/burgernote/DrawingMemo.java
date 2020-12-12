@@ -39,7 +39,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
     @Override
     void initMemoButton(Context context) {
         super.initMemoButton(context);
-        mMemoButton.setImageResource(R.mipmap.ic_launcher);      // 리소스 바꾸기
+        mMemoButton.setImageResource(R.drawable.button_drawing);      // 리소스 바꾸기
     }
 
     @Override
@@ -169,7 +169,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
             String path = MediaStore.Images.Media.insertImage(
                     mContext.getContentResolver(),
                     mBitmap,
-                    "Temp",
+                    "temp",
                     null
             );
             Uri uri = Uri.parse(path);

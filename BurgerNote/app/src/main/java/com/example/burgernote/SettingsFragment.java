@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +32,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mCheckedAll = view.findViewById(R.id.checked_all);      // 모두 체크
         mCheckedList.add(view.findViewById(R.id.checked_text_memo));        // 텍스트
         mCheckedList.add(view.findViewById(R.id.checked_drawing_memo));     // 그림
-        mCheckedList.add(view.findViewById(R.id.checked_recording_memo));   // 녹음
+        mCheckedList.add(view.findViewById(R.id.checked_record_memo));   // 녹음
         mCheckedList.add(view.findViewById(R.id.checked_calendar_memo));    // 일정
 
         initCheckBoxes();       // 기존꺼 로드

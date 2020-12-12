@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="5dp"
-                android:id="@+id/checked_recording_memo"/>
+                android:id="@+id/checked_record_memo"/>
         </LinearLayout>
 
         <LinearLayout

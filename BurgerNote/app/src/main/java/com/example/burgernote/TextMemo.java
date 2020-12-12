@@ -18,7 +18,7 @@ public class TextMemo extends Memo{
     @Override
     void initMemoDialog(Context context) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_text, null);     // 리소스 바꾸기
+        mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_text, null);
     }
 
     @Override
@@ -30,6 +30,6 @@ public class TextMemo extends Memo{
     void initMemoButton(Context context) {
         super.initMemoButton(context);
         mMemoButton.setTag("TextButton");
-        mMemoButton.setImageResource(R.mipmap.ic_launcher);      // 리소스 바꾸기
+        mMemoButton.setImageResource(R.drawable.button_text);      // 리소스 바꾸기
     }
 }

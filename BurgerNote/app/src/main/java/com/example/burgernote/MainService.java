@@ -43,9 +43,9 @@ public class MainService extends Service {
 
     void initMemoViews(){
         mMemoList.add(new TextMemo(this));
-        mMemoList.add(new DrawingMemo(this));
-        mMemoList.add(new RecordMemo(this));
         mMemoList.add(new CalendarMemo(this));
+        mMemoList.add(new RecordMemo(this));
+        mMemoList.add(new DrawingMemo(this));
     }
 
     void customizeMemos(boolean[] flags){

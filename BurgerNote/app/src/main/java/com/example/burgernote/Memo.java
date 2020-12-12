@@ -17,14 +17,15 @@ public abstract class Memo {
 
     void initMemoButton(Context context){
         mMemoButton = new ImageButton(context);
+        int dp = (int)context.getResources().getDisplayMetrics().density;
         mMemoButton.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                80*dp,
+                80*dp
         ));
         mMemoButton.setScaleType(ImageView.ScaleType.FIT_XY);
         mMemoButton.setAdjustViewBounds(true);
         mMemoButton.setBackground(null);
-        mMemoButton.setPadding(0, 0, 0, 0);
+        mMemoButton.setPadding(5*dp, 5*dp, 5*dp, 5*dp);
     }
 
     void show(){
@@ -52,18 +53,15 @@ public abstract class Memo {
     }
 
     void setButtonClick(){
-        mMemoButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                FloatingView floatingView = (FloatingView) mMemoButton.getRootView();
-                LinearLayout mMemos = (LinearLayout) floatingView.getChildAt(1);
+        mMemoButton.setOnClickListener(v -> {
+            FloatingView floatingView = (FloatingView) mMemoButton.getRootView();
+            LinearLayout mMemos = (LinearLayout) floatingView.getChildAt(1);
 
-                floatingView.addView(mMemoDialog, 1);       // dialog 추가
-                mMemos.setVisibility(View.GONE);        // list 감추기
+            floatingView.addView(mMemoDialog, 1);       // dialog 추가
+            mMemos.setVisibility(View.GONE);        // list 감추기
 
-                floatingView.mAdded = true;         // dialog 추가 state
-                mMemoDialog.startAnimation(mAnimation);         // start animation
-            }
+            floatingView.mAdded = true;         // dialog 추가 state
+            mMemoDialog.startAnimation(mAnimation);         // start animation
         });
     }
 }

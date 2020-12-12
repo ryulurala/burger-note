@@ -30,6 +30,6 @@ public class CalendarMemo extends Memo{
     void initMemoButton(Context context) {
         super.initMemoButton(context);
         mMemoButton.setTag("CalendarButton");
-        mMemoButton.setImageResource(R.mipmap.ic_launcher);      // 리소스 바꾸기
+        mMemoButton.setImageResource(R.drawable.button_calendar);      // 리소스 바꾸기
     }
 }
