@@ -20,6 +20,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private CheckBox mCheckedAll;
     private ArrayList<CheckBox> mCheckedList = new ArrayList<CheckBox>(4);
+    private int mCheckCount = 0;
 
     @Nullable
     @Override
@@ -31,9 +32,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         mCheckedAll = view.findViewById(R.id.checked_all);      // 모두 체크
         mCheckedList.add(view.findViewById(R.id.checked_text_memo));        // 텍스트
-        mCheckedList.add(view.findViewById(R.id.checked_drawing_memo));     // 그림
-        mCheckedList.add(view.findViewById(R.id.checked_record_memo));   // 녹음
         mCheckedList.add(view.findViewById(R.id.checked_calendar_memo));    // 일정
+        mCheckedList.add(view.findViewById(R.id.checked_record_memo));   // 녹음
+        mCheckedList.add(view.findViewById(R.id.checked_drawing_memo));     // 그림
 
         initCheckBoxes();       // 기존꺼 로드
         
@@ -63,26 +64,38 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         boolean isChecked = ((CheckBox) v).isChecked();
 
         if(v.getId() == R.id.checked_all){
-            setCheckedAll(isChecked);
 //            Log.d("myLog", "allCheck O: " + isChecked);
-        } else if(!isChecked) {             // 다른 버튼이 체크 상태가 풀렸을 경우
-            mCheckedAll.setChecked(isChecked);
-//            Log.d("myLog", "allCheck X: " + isChecked);
+            if(isChecked) mCheckCount = 4;
+            else mCheckCount = 0;
+            setCheckedAll(isChecked);
+        } else if(!isChecked){             // 다른 버튼이 체크 상태가 풀렸을 경우
+//            Log.d("myLog", " X: " + isChecked);
+            if(mCheckCount==1) {
+                ((CheckBox) v).setChecked(!isChecked);
+                return;
+            } else if(mCheckCount==4) {
+                mCheckedAll.setChecked(isChecked);
+            }
+            mCheckCount--;
+        } else {
+//            Log.d("myLog", " O: " + isChecked);
+            mCheckCount++;
+            if(mCheckCount == 4) mCheckedAll.setChecked(isChecked);
         }
+//        Log.d("myLog", "mCheckCount = "+mCheckCount);
     }
 
     void initCheckBoxes(){
-        boolean isCheckedAll = true;
+        mCheckCount = 0;
 
         for(int i = 0; i< mFlags.length; i++){
-            if(!mFlags[i]) {
-                isCheckedAll = false;
-                continue;
-            }
+            if(!mFlags[i]) continue;
+
+            mCheckCount++;
             mCheckedList.get(i).setChecked(mFlags[i]);
         }
 
-        if(isCheckedAll) mCheckedAll.setChecked(true);
+        if(mCheckCount==4) mCheckedAll.setChecked(true);
     }
 
     void setFlags(){
