@@ -4,69 +4,50 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 //다른 프래그먼트들과 형식이 좀 달라 다른 예제를 따라한 Parcelable 사용했습니다.
-public class RecordMemoData implements Parcelable {
+public class RecordMemoData {
 
-    private String record_title; //녹음파일 이름
-    private String record_path; //녹음파일 경로
-    private  int record_id; //녹음파일 아이디
-    private int record_length; //기록된 시간
-    private String record_date; //기록된 날짜 시간...
+    private String record_title; // 녹음 파일 이름
+    private String record_id; // 녹음 파일 아이디 -> 녹음한 시각을 yyyyMMddHHmmssSSS 으로 하여 아이디로 사용합니다. 이걸 파일명으로 쓸거에요.
+    private int record_length; // 녹음 길이
+    private String record_date; // 녹음한 시각
 
-
-    public String getFilePath() { return record_title; }
-
-    public void setFilepath(String filePath) { record_path = filePath; }
-
-    public int getLength() { return record_length; }
-
-    public void setLength(int length) { record_length = length; }
-
-    public int getId() { return record_id ; }
-
-    public void setId(int id) { record_id = id; }
-
-    public String getTitle() { return record_title; }
-
-    public  void setTitle(String title) { record_title = title; }
-
-    public String  getDate() { return record_date; }
-
-    public void setDate(String  date) { record_date = date; }
-
-
-    public RecordMemoData(Parcel in) {
-        record_title = in.readString();
-        record_path = in.readString();
-        record_id = in.readInt();
-        record_length = in.readInt();
-        record_date = in.readString();
+    public String getRecord_title() {
+        return record_title;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(record_title);
-        dest.writeString(record_path);
-        dest.writeInt(record_id);
-        dest.writeInt(record_length);
-        dest.writeString(record_date);
+    public void setRecord_title(String record_title) {
+        this.record_title = record_title;
     }
 
-    public static final Creator<RecordMemoData> CREATOR = new Creator<RecordMemoData>() {
-        @Override
-        public RecordMemoData createFromParcel(Parcel in) {
-            return new RecordMemoData(in);
-        }
+    public String getRecord_id() {
+        return record_id;
+    }
 
-        @Override
-        public RecordMemoData[] newArray(int size) {
-            return new RecordMemoData[size];
-        }
-    };
+    public void setRecord_id(String record_id) {
+        this.record_id = record_id;
+    }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getRecord_length() {
+        return record_length;
+    }
+
+    public void setRecord_length(int record_length) {
+        this.record_length = record_length;
+    }
+
+    public String getRecord_date() {
+        return record_date;
+    }
+
+    public void setRecord_date(String record_date) {
+        this.record_date = record_date;
     }
 
 
+    public RecordMemoData(String record_id, String record_title, int record_length, String record_date) {
+        this.record_id = record_id;
+        this.record_title = record_title;
+        this.record_length = record_length;
+        this.record_date = record_date;
+    }
 }

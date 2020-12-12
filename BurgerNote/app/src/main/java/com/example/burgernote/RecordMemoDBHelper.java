@@ -7,10 +7,6 @@ import android.provider.BaseColumns;
 
 public class RecordMemoDBHelper extends SQLiteOpenHelper {
 
-
-
-
-
     public static final int DATABASE_VERSION = 1;
 
     public RecordMemoDBHelper(Context context) {
@@ -21,6 +17,7 @@ public class RecordMemoDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String record_memo_SQL = "create table tb_record_memo (" +
                 "_id integer primary key autoincrement," +
+                "record_id," +
                 "title," +
                 "length," +
                 "date)";

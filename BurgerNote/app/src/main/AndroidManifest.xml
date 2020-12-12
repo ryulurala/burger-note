@@ -12,20 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".RecordMemoTest"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".MainService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
-        <activity android:name=".CalendarWriteActivity"/>
-        <activity android:name=".TextMemoWriteActivity"/>
+            android:exported="false"></service>
+
+        <activity android:name=".CalendarWriteActivity" />
+        <activity android:name=".TextMemoWriteActivity" />
     </application>
 
 </manifest>
