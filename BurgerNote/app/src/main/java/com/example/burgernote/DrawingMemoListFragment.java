@@ -52,7 +52,7 @@ public class DrawingMemoListFragment extends Fragment implements SwipeRefreshLay
         db.close();
         // DB 가져오기 끝
 
-        String filePath = "";
+        String filePath = getContext().getFilesDir().toString();
         try {
             filePath = getContext().getFilesDir().getCanonicalPath();
         } catch (IOException e) {

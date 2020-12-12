@@ -46,7 +46,7 @@ public class RecordingMemoListFragment extends Fragment implements SwipeRefreshL
 
         Cursor cursor = db.rawQuery("select record_id, title, length, date from tb_record_memo order by _id desc", null);
         while(cursor.moveToNext()) {
-            RecordMemoData data = new RecordMemoData(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+            RecordMemoData data = new RecordMemoData(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
             mMemoDataArrayList.add(data);
         }
         db.endTransaction();
