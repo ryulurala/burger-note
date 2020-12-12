@@ -23,13 +23,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return new TextMemoListFragment();
 
             case 1:
-                return new DrawingMemoListFragment();
+                return new CalendarListFragment();
 
             case 2:
                 return new RecordingMemoListFragment();
 
             case 3:
-                return new CalendarListFragment();
+                return new DrawingMemoListFragment();
 
             case 4:
                 return new SettingsFragment();
