@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         // tab 추가
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_tab_drawing_24px));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_tab_memo_24px));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_tab_drawing_24px));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_tab_recording_24px));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_tab_calendar_24px));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_tab_setting_24px));
@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openService(){
-        Log.d("myLog", "openService()");
         if(!mBound) {
+            Log.d("myLog", "openService()");
             // bind service
             bindService(
                     new Intent(this, MainService.class),

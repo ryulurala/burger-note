@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class TabFragment5 extends Fragment {
+public class SettingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     @Override
@@ -20,5 +21,10 @@ public class TabFragment5 extends Fragment {
         // 설정탭 프래그먼트입니다.
 
         return view;
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }
