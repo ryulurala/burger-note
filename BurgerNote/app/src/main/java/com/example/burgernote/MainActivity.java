@@ -146,7 +146,10 @@ public class MainActivity extends AppCompatActivity {
             } else {         // 이미 권한을 받았다.
                 openService();
             }
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.RECORD_AUDIO,
+            }, 200);
         } else {        // 마시멜로우 미만 버전은 이미 설치했을 경우 권한 체크를 했다.
             openService();
         }

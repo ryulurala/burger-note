@@ -1,25 +1,22 @@
 package com.example.burgernote;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
+
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 public class RecordMemoPlay extends AppCompatActivity implements View.OnClickListener {
 
@@ -123,10 +120,6 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
                 // db.beginTransaction();
                 String sql = "DELETE FROM tb_record_memo where _id='"+ id +"'";
                 db.execSQL(sql);
-                Log.i("테스트", sql);
-                Log.i("테스트", record_id);
-
-                db.delete("TB_RECORD_MEMO", "RECORD_ID  LIKE ?", new String[] { record_id });
 
                 //db.endTransaction();
                 db.close();
