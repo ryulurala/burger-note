@@ -20,24 +20,19 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch(position) {
             case 0:
-                DrawingMemoListFragment tab1 = new DrawingMemoListFragment();
-                return tab1;
+                return new TextMemoListFragment();
 
             case 1:
-                TextMemoListFragment tab2 = new TextMemoListFragment();
-                return tab2;
+                return new DrawingMemoListFragment();
 
             case 2:
-                RecordingMemoListFragment tab3 = new RecordingMemoListFragment();
-                return tab3;
+                return new RecordingMemoListFragment();
 
             case 3:
-                CalendarListFragment tab4 = new CalendarListFragment();
-                return tab4;
+                return new CalendarListFragment();
 
             case 4:
-                TabFragment5 tab5 = new TabFragment5();
-                return tab5;
+                return new SettingsFragment();
 
             default:
                 return null;
