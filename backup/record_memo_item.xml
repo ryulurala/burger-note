@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/recorder_memo_fileviewer"
-        android:src="@drawable/ic_fileviewer"
+        android:src="@mipmap/ic_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"/>
@@ -32,7 +32,7 @@
             android:id="@+id/recorder_memo_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00:00"
+            android:text="00:00 "
             android:textSize="12sp"
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="7dp"/>

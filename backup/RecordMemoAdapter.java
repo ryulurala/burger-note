@@ -45,9 +45,6 @@ public class RecordMemoAdapter extends RecyclerView.Adapter<RecordMemoAdapter.Cu
 //        holder.tv_recorder_date.setText((RECORD_DATA_LIST).get(position).getDate());
 
 
-
-
-
     }
 
     @Override
