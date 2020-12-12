@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
@@ -10,7 +11,7 @@
     android:background="#ffffff" >
 
     <EditText
-        android:id="@+id/text_memo_dialog_add_content"
+        android:id="@+id/text_edit"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
@@ -24,26 +25,26 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/text_memo_dialog_add_btn"
+            android:id="@+id/text_copy"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="@color/gray0"
             android:background="@drawable/filled_button"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="4dp"
-            android:text="저장" />
+            android:layout_marginEnd="4dp"
+            android:text="copy" />
 
         <Button
-            android:id="@+id/text_memo_dialog_close_btn"
+            android:id="@+id/text_save"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="@color/gray0"
             android:background="@drawable/filled_button"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="4dp"
-            android:text="닫기" />
+            android:layout_marginStart="4dp"
+            android:text="save" />
 
     </LinearLayout>
 

@@ -36,13 +36,11 @@ public abstract class Memo {
         mMemoButton.setVisibility(ImageView.GONE);
     }
 
-    void initMemoDialog(Context context){
-        float dp = context.getResources().getDisplayMetrics().density;      // dp
-        int width = (int) (300 * dp);
-        int height = (int) (280 * dp);
+    void initMemoDialog(Context context, int width, int height){
+        int dp = (int) context.getResources().getDisplayMetrics().density;      // dp
 
         // layoutParams 초기화
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width*dp, height*dp);
 
         mMemoDialog.setLayoutParams(layoutParams);
     }

@@ -39,14 +39,14 @@ public class RecordMemo extends Memo implements View.OnClickListener{
     public RecordMemo(Context context){
         initMemoButton(context);
         setButtonClick();
-        initMemoDialog(context);
+        initMemoDialog(context, 250, 300);
         setAnimation(context, R.anim.scale_up);
         mContext = context;
     }
 
     @SuppressLint("InflateParams")
     @Override
-    void initMemoDialog(Context context) {
+    void initMemoDialog(Context context, int width, int height) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_record, null);
 
@@ -60,7 +60,7 @@ public class RecordMemo extends Memo implements View.OnClickListener{
         mMemoDialog.findViewById(R.id.record_clear).setOnClickListener(this);   // 공유 버튼
         mMemoDialog.findViewById(R.id.record_save).setOnClickListener(this);    // 저장 버튼
 
-        super.initMemoDialog(context);
+        super.initMemoDialog(context, width, height);
     }
 
     @Override

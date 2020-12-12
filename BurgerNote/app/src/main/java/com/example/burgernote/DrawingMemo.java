@@ -30,7 +30,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
 
     public DrawingMemo(Context context){
         initMemoButton(context);
-        initMemoDialog(context);
+        initMemoDialog(context, 250, 200);
         setButtonClick();
         setAnimation(context, R.anim.scale_up);
         mContext = context;
@@ -43,7 +43,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
     }
 
     @Override
-    void initMemoDialog(Context context) {
+    void initMemoDialog(Context context, int width, int height) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_drawing, null);
 
@@ -51,7 +51,7 @@ public class DrawingMemo extends Memo implements View.OnClickListener{
         mDrawingView.setPaintButton(mMemoDialog.findViewById(R.id.draw_paint));
         ((LinearLayout)mMemoDialog.getChildAt(0)).addView(mDrawingView);
 
-        super.initMemoDialog(context);
+        super.initMemoDialog(context, width, height);
     }
 
     @Override
