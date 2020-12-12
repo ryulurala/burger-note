@@ -2,6 +2,8 @@ package com.example.burgernote;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class RecordMemoAdapter extends RecyclerView.Adapter<RecordMemoAdapter.Cu
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), RecordMemoPlay.class);
 
+                intent.putExtra("id", MEMO_DATA_LIST.get(position).getId());
                 intent.putExtra("record_id",MEMO_DATA_LIST.get(position).getRecord_id());
                 intent.putExtra("record_title",MEMO_DATA_LIST.get(position).getRecord_title());
                 intent.putExtra("record_length",MEMO_DATA_LIST.get(position).getRecord_length());

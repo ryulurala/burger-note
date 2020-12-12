@@ -22,6 +22,11 @@ public class RecordMemoDBHelper extends SQLiteOpenHelper {
                 "length," +
                 "date)";
         db.execSQL(record_memo_SQL);
+
+        String log_SQL = "create table log(" +
+                "_id integer primary key autoincrement," +
+                "date)";
+        db.execSQL(log_SQL);
     }
 
     @Override

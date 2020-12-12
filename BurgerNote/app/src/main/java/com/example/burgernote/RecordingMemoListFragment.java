@@ -1,11 +1,14 @@
 package com.example.burgernote;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,15 +44,15 @@ public class RecordingMemoListFragment extends Fragment implements SwipeRefreshL
         mMemoDataArrayList.clear();
 
         // DB 가져오기 시작
-        SQLiteDatabase db = mMemoDBHelper.getReadableDatabase();
-        db.beginTransaction();
+        SQLiteDatabase db = mMemoDBHelper.getWritableDatabase();
+        // db.beginTransaction();
 
-        Cursor cursor = db.rawQuery("select record_id, title, length, date from tb_record_memo order by _id desc", null);
+        Cursor cursor = db.rawQuery("select * from tb_record_memo order by _id desc", null);
         while(cursor.moveToNext()) {
-            RecordMemoData data = new RecordMemoData(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            RecordMemoData data = new RecordMemoData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
             mMemoDataArrayList.add(data);
         }
-        db.endTransaction();
+        // db.endTransaction();
         db.close();
         // DB 가져오기 끝
 
