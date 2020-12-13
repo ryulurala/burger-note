@@ -1,5 +1,6 @@
 package com.example.burgernote;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,20 +40,16 @@ public class TextMemoAdapter extends RecyclerView.Adapter<TextMemoAdapter.Custom
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String curName = holder.text_memo_date.getText().toString();
-                Toast.makeText(view.getContext(),curName,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), TextMemoPlay.class);
+
+                intent.putExtra("id", arrayList.get(position).getId());
+                intent.putExtra("text_memo_content",arrayList.get(position).getText_memo_content());
+                intent.putExtra("text_memo_date",arrayList.get(position).getText_memo_date());
+
+
+                view.getContext().startActivity(intent);
             }
         });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                remove(holder.getAdapterPosition());
-
-                return true;
-            }
-        });
-
     }
 
     @Override

@@ -54,9 +54,9 @@ public class TextMemoListFragment extends Fragment implements View.OnClickListen
         db = helper.getReadableDatabase();
         db.beginTransaction();
 
-        Cursor cursor = db.rawQuery("select content, date from tb_text_memo order by _id desc", null);
+        Cursor cursor = db.rawQuery("select _id, content, date from tb_text_memo order by _id desc", null);
         while(cursor.moveToNext()) {
-            TextMemoData data = new TextMemoData(cursor.getString(0), cursor.getString(1));
+            TextMemoData data = new TextMemoData(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
             arrayList.add(data);
         }
         db.endTransaction();

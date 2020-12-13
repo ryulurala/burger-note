@@ -42,7 +42,6 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("음성 메모 재생");
         setContentView(R.layout.activity_record_memo_play);
 
         Intent intent = new Intent(this.getIntent());
