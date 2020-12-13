@@ -73,8 +73,7 @@ public class TextMemoListFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), TextMemoWriteActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), TextMemoWriteActivity.class));
     }
 
     @Override
