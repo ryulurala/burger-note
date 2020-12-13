@@ -28,6 +28,7 @@ public class TextMemoWriteActivity extends AppCompatActivity implements View.OnC
         contentView = findViewById(R.id.text_memo_add_content);
         if(getIntent().getBooleanExtra("TextMemo", false)){
             Log.d("myLog", "TextMemo intent");
+            contentView.setText(TextMemo.mEditText.getText());
             contentView.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

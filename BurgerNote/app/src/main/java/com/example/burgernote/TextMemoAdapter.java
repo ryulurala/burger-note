@@ -46,7 +46,6 @@ public class TextMemoAdapter extends RecyclerView.Adapter<TextMemoAdapter.Custom
                 intent.putExtra("text_memo_content",arrayList.get(position).getText_memo_content());
                 intent.putExtra("text_memo_date",arrayList.get(position).getText_memo_date());
 
-
                 view.getContext().startActivity(intent);
             }
         });

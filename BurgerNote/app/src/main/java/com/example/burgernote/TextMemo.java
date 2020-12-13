@@ -85,7 +85,7 @@ public class TextMemo extends Memo implements View.OnClickListener{
 
     void load(){
         Log.d("myLog", "TextMemo load()");
-        if (!(mClipboard.hasPrimaryClip()) && !(mClipboard.getPrimaryClipDescription().hasMimeType("text/plain"))) {
+        if (!(mClipboard.hasPrimaryClip()) || !(mClipboard.getPrimaryClipDescription().hasMimeType("text/plain"))) {
             mEditText.setText("");
         } else {
             ClipData.Item item = mClipboard.getPrimaryClip().getItemAt(0);

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -46,6 +47,9 @@ public class TextMemoPlay extends AppCompatActivity implements View.OnClickListe
         textPlayContent.setText(text_memo_content);
         textPlayContent.setMovementMethod(new ScrollingMovementMethod());
         textPlayDate.setText(text_memo_date);
+//        Log.d("myLog", "TextMemo Play");
+        TextMemo.mEditText.setText(textPlayContent.getText());
+        Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT ).show();
     }
 
     @Override
