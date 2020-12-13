@@ -5,8 +5,11 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,7 +18,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class CalendarWriteActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+import java.util.prefs.NodeChangeListener;
+
+public class CalendarWriteActivity extends AppCompatActivity
+        implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     EditText contentText;
 
@@ -49,6 +55,20 @@ public class CalendarWriteActivity extends AppCompatActivity implements View.OnC
         dateButton = findViewById(R.id.calendar_write_date_button);
         startTimeButton = findViewById(R.id.calendar_write_start_time_button);
         endTimeButton = findViewById(R.id.calendar_write_end_time_button);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("CalendarMemo", false)){
+
+            String title = intent.getStringExtra("Title");          // 제목
+            String date = intent.getStringExtra("Date");            // 날짜
+            String startTime = intent.getStringExtra("StartTime");    // 시작 시간
+            String endTime = intent.getStringExtra("EndTime");       // 마감 시간
+
+            contentText.setText(title);
+            dateText.setText(date);
+            startTimeText.setText(startTime);
+            endTimeText.setText(endTime);
+        }
 
         addBtn = findViewById(R.id.calendar_add_btn);
         addBtn.setOnClickListener(this);

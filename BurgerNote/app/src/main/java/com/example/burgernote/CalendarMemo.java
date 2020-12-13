@@ -90,12 +90,12 @@ public class CalendarMemo extends Memo implements View.OnClickListener{
     void write(){
         Log.d("myLog", "CalendarMemo write()");
         Intent intent = new Intent(mContext, CalendarWriteActivity.class);
-        intent.putExtra("CalendarMemo", true);  // 인탠트 보낸 여부
+        intent.putExtra("CalendarMemo", true);      // 인탠트 보낸 여부
 
-        intent.putExtra("Title", true);         // 제목
-        intent.putExtra("Date", true);          // 날짜
-        intent.putExtra("StartTime", true);     // 시작 시간
-        intent.putExtra("EndTime", true);       // 마감 시간
+        intent.putExtra("Title", mTitle.getText());         // 제목
+        intent.putExtra("Date", mDate.getText());          // 날짜
+        intent.putExtra("StartTime", mStartTime.getText());     // 시작 시간
+        intent.putExtra("EndTime", mEndTime.getText());       // 마감 시간
 
         mContext.startActivity(intent);
     }
