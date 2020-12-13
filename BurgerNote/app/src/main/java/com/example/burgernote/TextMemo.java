@@ -93,9 +93,4 @@ public class TextMemo extends Memo implements View.OnClickListener{
             mEditText.setText(item.getText().toString());
         }
     }
-
-//    void save() {
-//        Log.d("myLog", "TextMemo save()");
-//        mEditText.setText("save");
-//    }
 }

@@ -28,7 +28,7 @@ public class RecordMemo extends Memo implements View.OnClickListener{
     private ImageButton mRecordStart;
     private ImageButton mRecordStop;
 
-    private final String RECORD_TITLE = "temp";      // 녹음 파일 제목
+    private String mTitle;      // 녹음 파일 제목
     private String mDate;       // 녹음 파일 시작 시간
     private String mFileName;   // 파일 이름
     private long mLength;     // 녹음 길이
@@ -96,7 +96,9 @@ public class RecordMemo extends Memo implements View.OnClickListener{
     private void initRecorder(){
         // DB init
         mDate = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분").format(new Date());
-        mFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".mp4";
+        mTitle = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        mFileName = mTitle + ".mp4";
+
         File file = new File(mContext.getFilesDir(), mFileName);
 
 //        Log.d("myLog", "RecordFileName = "+ mFileName);
@@ -178,7 +180,7 @@ public class RecordMemo extends Memo implements View.OnClickListener{
             RecordMemoDBHelper helper = new RecordMemoDBHelper(mContext);
             SQLiteDatabase db = helper.getWritableDatabase();
             db.execSQL("insert into tb_record_memo (record_id, title, length, date) values (?, ?, ?, ?)",
-                    new String[]{mFileName, RECORD_TITLE,min+"분 "+sec+"."+mil+"초", mDate});
+                    new String[]{mFileName, mTitle,min+"분 "+sec+"."+mil+"초", mDate});
             db.close();
 
             Toast.makeText(mContext, "Record Saved", Toast.LENGTH_SHORT).show();
