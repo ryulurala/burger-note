@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,20 @@ public class TextMemoWriteActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_text_memo_write);
 
         contentView = findViewById(R.id.text_memo_add_content);
+//        if(getIntent().getBooleanExtra("TextMemo", false)){
+//            Log.d("myLog", "TextMemo intent");
+//            contentView.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                }
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                }
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//                }
+//            });
+//        }
         addBtn = findViewById(R.id.text_memo_add_btn);
 
         addBtn.setOnClickListener(this);

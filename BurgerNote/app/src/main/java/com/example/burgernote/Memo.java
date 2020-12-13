@@ -1,6 +1,7 @@
 package com.example.burgernote;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -18,10 +19,7 @@ public abstract class Memo {
     void initMemoButton(Context context){
         mMemoButton = new ImageButton(context);
         int dp = (int)context.getResources().getDisplayMetrics().density;
-        mMemoButton.setLayoutParams(new ViewGroup.LayoutParams(
-                80*dp,
-                80*dp
-        ));
+        mMemoButton.setLayoutParams(new ViewGroup.LayoutParams(80*dp, 80*dp));
         mMemoButton.setScaleType(ImageView.ScaleType.FIT_XY);
         mMemoButton.setAdjustViewBounds(true);
         mMemoButton.setBackground(null);

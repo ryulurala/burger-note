@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +14,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.io.Serializable;
+
 public class TextMemo extends Memo implements View.OnClickListener{
 
     private Context mContext;
 
     private ClipboardManager mClipboard;
-    private ClipData mClipData;
 
     private EditText mEditText;
-
 
     public TextMemo(Context context){
         mContext = context;
@@ -77,7 +78,9 @@ public class TextMemo extends Memo implements View.OnClickListener{
 
     void write() {
         Log.d("myLog", "TextMemo write()");
-        mContext.startActivity(new Intent(mContext, TextMemoWriteActivity.class));
+        Intent intent = new Intent(mContext, TextMemoWriteActivity.class);
+        intent.putExtra("TextMemo", true);
+        mContext.startActivity(intent);
     }
 
     void load(){
