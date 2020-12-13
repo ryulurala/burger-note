@@ -22,7 +22,7 @@ public class TextMemo extends Memo implements View.OnClickListener{
 
     private ClipboardManager mClipboard;
 
-    private EditText mEditText;
+    public static EditText mEditText;
 
     public TextMemo(Context context){
         mContext = context;
@@ -42,7 +42,7 @@ public class TextMemo extends Memo implements View.OnClickListener{
 
         mMemoDialog.findViewById(R.id.text_write).setOnClickListener(this);
         mMemoDialog.findViewById(R.id.text_load).setOnClickListener(this);
-        mMemoDialog.findViewById(R.id.text_save).setOnClickListener(this);
+//        mMemoDialog.findViewById(R.id.text_save).setOnClickListener(this);
 
         mEditText = mMemoDialog.findViewById(R.id.text_edit);
 
@@ -70,9 +70,9 @@ public class TextMemo extends Memo implements View.OnClickListener{
             case R.id.text_load:
                 load();
                 break;
-            case R.id.text_save:
-                save();
-                break;
+//            case R.id.text_save:
+//                save();
+//                break;
         }
     }
 
@@ -94,8 +94,8 @@ public class TextMemo extends Memo implements View.OnClickListener{
         }
     }
 
-    void save() {
-        Log.d("myLog", "TextMemo save()");
-        mEditText.setText("save");
-    }
+//    void save() {
+//        Log.d("myLog", "TextMemo save()");
+//        mEditText.setText("save");
+//    }
 }

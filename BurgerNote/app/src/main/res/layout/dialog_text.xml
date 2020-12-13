@@ -46,16 +46,16 @@
             android:layout_marginHorizontal="4dp"
             android:text="load" />
 
-        <Button
-            android:id="@+id/text_save"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray0"
-            android:background="@drawable/filled_button"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="2dp"
-            android:text="save" />
+<!--        <Button-->
+<!--            android:id="@+id/text_save"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/gray0"-->
+<!--            android:background="@drawable/filled_button"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            android:text="save" />-->
 
     </LinearLayout>
 
