@@ -24,6 +24,10 @@
             android:name=".RecordMemoPlay"
             android:theme="@style/AppThemeDialog" />
 
+        <activity
+            android:name=".TextMemoPlay"
+            android:theme="@style/AppThemeDialog" />
+
         <service
             android:name=".MainService"
             android:enabled="true"
