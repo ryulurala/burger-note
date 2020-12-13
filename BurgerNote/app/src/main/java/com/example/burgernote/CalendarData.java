@@ -2,6 +2,7 @@ package com.example.burgernote;
 
 public class CalendarData {
 
+    private int id;
     private String calendar_content;
     private String calendar_date;
     private String calendar_start_time;
@@ -10,7 +11,16 @@ public class CalendarData {
     // 일정 메모는 content, date, start time, end time을 String 포맷으로 가짐.
 
 
-    public CalendarData(String calendar_content, String calendar_date, String calendar_start_time, String calendar_end_time) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public CalendarData(int id, String calendar_content, String calendar_date, String calendar_start_time, String calendar_end_time) {
+        this.id = id;
         this.calendar_content = calendar_content;
         this.calendar_date = calendar_date;
         this.calendar_start_time = calendar_start_time;
