@@ -1,5 +1,6 @@
 package com.example.burgernote;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -46,20 +47,15 @@ public class DrawingMemoAdapter extends RecyclerView.Adapter<DrawingMemoAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String curName = holder.tv_date.getText().toString();
-                Toast.makeText(view.getContext(),curName,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), DrawingMemoPlay.class);
+
+                intent.putExtra("id", MEMO_DATA_LIST.get(position).getId());
+                intent.putExtra("drawing_memo_image",MEMO_DATA_LIST.get(position).getDrawing_memo_image());
+                intent.putExtra("drawing_memo_date",MEMO_DATA_LIST.get(position).getDrawing_memo_date());
+
+                view.getContext().startActivity(intent);
             }
         });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                remove(holder.getAdapterPosition());
-
-                return true;
-            }
-        });
-
     }
 
     @Override

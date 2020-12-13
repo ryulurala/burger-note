@@ -43,9 +43,9 @@ public class DrawingMemoListFragment extends Fragment implements SwipeRefreshLay
         SQLiteDatabase db = mMemoDBHelper.getReadableDatabase();
         db.beginTransaction();
 
-        Cursor cursor = db.rawQuery("select image, date from tb_drawing_memo order by _id desc", null);
+        Cursor cursor = db.rawQuery("select _id, image, date from tb_drawing_memo order by _id desc", null);
         while(cursor.moveToNext()) {
-            DrawingMemoData data = new DrawingMemoData(cursor.getString(0), cursor.getString(1));
+            DrawingMemoData data = new DrawingMemoData(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
             mMemoDataArrayList.add(data);
         }
         db.endTransaction();

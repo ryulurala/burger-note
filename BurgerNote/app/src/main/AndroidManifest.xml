@@ -30,12 +30,15 @@
             android:name=".CalendarPlay"
             android:theme="@style/AppThemeDialog" />
         <activity
+            android:name=".DrawingMemoPlay"
+            android:theme="@style/AppThemeDialog" />
+
+        <activity
             android:name=".TextMemoWriteActivity"
             android:theme="@style/AppThemeDialog" />
         <activity
             android:name=".CalendarWriteActivity"
             android:theme="@style/AppThemeDialog" />
-
         <service
             android:name=".MainService"
             android:enabled="true"
