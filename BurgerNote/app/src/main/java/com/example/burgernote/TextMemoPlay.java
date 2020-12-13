@@ -49,7 +49,7 @@ public class TextMemoPlay extends AppCompatActivity implements View.OnClickListe
         textPlayDate.setText(text_memo_date);
 //        Log.d("myLog", "TextMemo Play");
         TextMemo.mEditText.setText(textPlayContent.getText());
-        Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getApplicationContext(), "메모가 복사되었습니다.", Toast.LENGTH_SHORT ).show();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class TextMemoPlay extends AppCompatActivity implements View.OnClickListe
                 //db.endTransaction();
                 db.close();
 
-                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "메모가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             }

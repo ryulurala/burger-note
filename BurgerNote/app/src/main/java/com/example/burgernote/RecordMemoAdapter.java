@@ -40,9 +40,8 @@ public class RecordMemoAdapter extends RecyclerView.Adapter<RecordMemoAdapter.Cu
 
         String recordPath = RECORD_PATH + MEMO_DATA_LIST.get(position).getRecord_id();
 
-        holder.tv_recorder_title.setText(MEMO_DATA_LIST.get(position).getRecord_title());
+        holder.tv_recorder_title.setText(MEMO_DATA_LIST.get(position).getRecord_date());
         holder.tv_recorder_length.setText(MEMO_DATA_LIST.get(position).getRecord_length());
-        holder.tv_recorder_date.setText(MEMO_DATA_LIST.get(position).getRecord_date());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener(){
@@ -72,13 +71,11 @@ public class RecordMemoAdapter extends RecyclerView.Adapter<RecordMemoAdapter.Cu
 
         protected TextView tv_recorder_title;
         protected TextView tv_recorder_length;
-        protected TextView tv_recorder_date;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             this.tv_recorder_title = (TextView) itemView.findViewById(R.id.recorder_memo_title);
             this.tv_recorder_length = (TextView) itemView.findViewById(R.id.recorder_memo_length);
-            this.tv_recorder_date = (TextView) itemView.findViewById(R.id.recorder_memo_date);
         }
     }
 }

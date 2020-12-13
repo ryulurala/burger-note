@@ -37,5 +37,13 @@
     <style name="AppThemeDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/NotoSansButtonStyle</item>
+        <item name="android:editTextStyle">@style/NotoSansEditTextStyle</item>
+        <item name="android:radioButtonStyle">@style/NotoSansRadioButtonStyle</item>
+        <item name="android:checkboxStyle">@style/NotoSansCheckboxStyle</item>
+        <item name="android:textViewStyle">@style/NotoSansTextViewStyle</item>
     </style>
 </resources>

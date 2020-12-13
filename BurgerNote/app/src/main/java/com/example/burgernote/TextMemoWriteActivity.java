@@ -3,6 +3,7 @@ package com.example.burgernote;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,6 +46,8 @@ public class TextMemoWriteActivity extends AppCompatActivity implements View.OnC
         addBtn = findViewById(R.id.text_memo_add_btn);
 
         addBtn.setOnClickListener(this);
+        contentView.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
     }
     @Override
     public void onClick(View view){
@@ -59,7 +62,7 @@ public class TextMemoWriteActivity extends AppCompatActivity implements View.OnC
         db.execSQL("insert into tb_text_memo (content, date) values (?, ?)", new String[]{content, date});
         db.close();
 
-        Toast toast = Toast.makeText(getApplicationContext(), "입력이 완료되었습니다,", Toast.LENGTH_SHORT );
+        Toast toast = Toast.makeText(getApplicationContext(), "메모가 저장되었습니다.", Toast.LENGTH_SHORT );
         toast.show();
     }
 }

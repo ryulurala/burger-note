@@ -28,13 +28,19 @@
             android:name=".TextMemoPlay"
             android:theme="@style/AppThemeDialog" />
 
+        <activity
+            android:name=".TextMemoWriteActivity"
+            android:theme="@style/AppThemeDialog" />
+
+        <activity
+            android:name=".CalendarWriteActivity"
+            android:theme="@style/AppThemeDialog" />
+
         <service
             android:name=".MainService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".CalendarWriteActivity" />
-        <activity android:name=".TextMemoWriteActivity" />
     </application>
 
 </manifest>

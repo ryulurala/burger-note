@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/recorder_memo_title"
             android:text="제목"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:textColor="@color/gray9"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -31,21 +31,13 @@
             android:textColor="@color/gray9"
             android:layout_marginTop="4dp"/>
 
-        <TextView
-            android:id="@+id/recorder_memo_date"
-            android:text="2020년 10월 31일"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:layout_marginTop="6dp" />
-
     </LinearLayout>
 
     <ImageView
         android:id="@+id/recorder_memo_fileviewer"
         android:src="@drawable/ic_fileviewer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="8dp" />
 
