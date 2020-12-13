@@ -1,14 +1,30 @@
 package com.example.burgernote;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class TextMemo extends Memo implements View.OnClickListener{
 
+    private Context mContext;
+
+    private ClipboardManager mClipboard;
+    private ClipData mClipData;
+
+    private EditText mEditText;
+
+
     public TextMemo(Context context){
+        mContext = context;
         initMemoButton(context);
         setButtonClick();
         initMemoDialog(context, 200, 150);
@@ -21,10 +37,15 @@ public class TextMemo extends Memo implements View.OnClickListener{
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMemoDialog = (LinearLayout) layoutInflater.inflate(R.layout.dialog_text, null);
 
-        mMemoDialog.findViewById(R.id.text_copy).setOnClickListener(this);
+        mClipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+
+        mMemoDialog.findViewById(R.id.text_write).setOnClickListener(this);
+        mMemoDialog.findViewById(R.id.text_load).setOnClickListener(this);
         mMemoDialog.findViewById(R.id.text_save).setOnClickListener(this);
 
-        super.initMemoDialog(context, width, height);        // 너무 커짐
+        mEditText = mMemoDialog.findViewById(R.id.text_edit);
+
+        super.initMemoDialog(context, width, height);
     }
 
     @Override
@@ -42,8 +63,11 @@ public class TextMemo extends Memo implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.text_copy:
-                copy();
+            case R.id.text_write:
+                write();
+                break;
+            case R.id.text_load:
+                load();
                 break;
             case R.id.text_save:
                 save();
@@ -51,12 +75,24 @@ public class TextMemo extends Memo implements View.OnClickListener{
         }
     }
 
+    void write() {
+        Log.d("myLog", "TextMemo write()");
+        mContext.startActivity(new Intent(mContext, TextMemoWriteActivity.class));
+    }
+
+    void load(){
+        Log.d("myLog", "TextMemo load()");
+        if (!(mClipboard.hasPrimaryClip()) && !(mClipboard.getPrimaryClipDescription().hasMimeType("text/plain"))) {
+            mEditText.setText("");
+        } else {
+            ClipData.Item item = mClipboard.getPrimaryClip().getItemAt(0);
+            Log.d("myLog", "data = " + item.getText().toString());
+            mEditText.setText(item.getText().toString());
+        }
+    }
+
     void save() {
-
+        Log.d("myLog", "TextMemo save()");
+        mEditText.setText("save");
     }
-
-    void copy() {
-
-    }
-
 }
