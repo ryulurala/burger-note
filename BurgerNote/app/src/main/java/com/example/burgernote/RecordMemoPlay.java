@@ -109,6 +109,10 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
             }
 
             case R.id.record_close_button: {
+                if(mediaPlayer != null){
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
                 finish();
                 break;
             }
