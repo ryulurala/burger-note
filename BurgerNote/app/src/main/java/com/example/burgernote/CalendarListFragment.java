@@ -56,9 +56,9 @@ public class CalendarListFragment extends Fragment implements View.OnClickListen
         db = helper.getReadableDatabase();
         db.beginTransaction();
 
-        Cursor cursor = db.rawQuery("select content, date, start_time, end_time from tb_calendar order by date, start_time, end_time", null);
+        Cursor cursor = db.rawQuery("select _id, content, date, start_time, end_time from tb_calendar order by date, start_time, end_time", null);
         while(cursor.moveToNext()) {
-            CalendarData data = new CalendarData(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            CalendarData data = new CalendarData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
             arrayList.add(data);
         }
         db.endTransaction();

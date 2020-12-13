@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textSize="14dp"
-            android:textColor="@color/gray9"
+            android:textColor="@color/gray6"
             android:layout_marginTop="4dp"/>
 
     </LinearLayout>

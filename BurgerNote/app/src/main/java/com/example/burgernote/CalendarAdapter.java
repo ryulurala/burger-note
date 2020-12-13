@@ -1,5 +1,6 @@
 package com.example.burgernote;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,20 +42,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Custom
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String curName = holder.calendar_date.getText().toString();
-                Toast.makeText(view.getContext(),curName,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), CalendarPlay.class);
+
+                intent.putExtra("id", arrayList.get(position).getId());
+                intent.putExtra("calendar_content",arrayList.get(position).getCalendar_content());
+                intent.putExtra("calendar_date",arrayList.get(position).getCalendar_date());
+                intent.putExtra("calendar_start_time",arrayList.get(position).getCalendar_start_time());
+                intent.putExtra("calendar_end_time",arrayList.get(position).getCalendar_end_time());
+
+                view.getContext().startActivity(intent);
             }
         });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                remove(holder.getAdapterPosition());
-
-                return true;
-            }
-        });
-
     }
 
     @Override

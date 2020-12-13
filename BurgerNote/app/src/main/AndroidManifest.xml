@@ -23,15 +23,15 @@
         <activity
             android:name=".RecordMemoPlay"
             android:theme="@style/AppThemeDialog" />
-
         <activity
             android:name=".TextMemoPlay"
             android:theme="@style/AppThemeDialog" />
-
+        <activity
+            android:name=".CalendarPlay"
+            android:theme="@style/AppThemeDialog" />
         <activity
             android:name=".TextMemoWriteActivity"
             android:theme="@style/AppThemeDialog" />
-
         <activity
             android:name=".CalendarWriteActivity"
             android:theme="@style/AppThemeDialog" />
@@ -40,7 +40,6 @@
             android:name=".MainService"
             android:enabled="true"
             android:exported="false" />
-
     </application>
 
 </manifest>
