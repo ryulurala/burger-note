@@ -24,7 +24,7 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
     String record_id;
     String record_title;
     String record_length;
-    String record_data;
+    String record_date;
 
     TextView recordLength;
     TextView recordTitle;
@@ -50,7 +50,7 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
         record_id = intent.getStringExtra("record_id");
         record_title = intent.getStringExtra("record_title");
         record_length = intent.getStringExtra("record_length");
-        record_data = intent.getStringExtra("record_data");
+        record_date = intent.getStringExtra("record_date");
 
         filePath = getFilesDir().toString() + "/" + record_id;
 
@@ -75,7 +75,7 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
         playBtn.setOnClickListener(this);
         closeBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
-        recordTitle.setText(record_title);
+        recordTitle.setText(record_date);
         recordLength.setText(record_length);
     }
 
@@ -109,6 +109,10 @@ public class RecordMemoPlay extends AppCompatActivity implements View.OnClickLis
             }
 
             case R.id.record_close_button: {
+                if(mediaPlayer != null){
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
                 finish();
                 break;
             }
