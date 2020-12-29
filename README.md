@@ -1,8 +1,6 @@
 # burgerNote - project
 
-## Soongsil University - User Interface(Android framework)
-
-&nbsp;
+**Soongsil University - User Interface(Android framework)**
 
 Demo video [Youtube](https://www.youtube.com/watch?v=e-oLKmZaIK0&list=PLyaDjBUu6sYCJ955oKB0Xn2rjgjTMTx2q&index=14 "Demo video")
 
