@@ -2,7 +2,7 @@
 
 **Soongsil University - User Interface(Android framework)**
 
-Demo video [Youtube](https://www.youtube.com/watch?v=e-oLKmZaIK0&list=PLyaDjBUu6sYCJ955oKB0Xn2rjgjTMTx2q&index=14 "Demo video")
+Demo video [Youtube](https://youtu.be/e-oLKmZaIK0 "Demo video")
 
 Plan [here](./res/plan.pdf "Plan")
 
